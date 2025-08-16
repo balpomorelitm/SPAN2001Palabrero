@@ -7,6 +7,12 @@ class WordleHKU {
         this.gameOver = false;
         this.hintUsed = false;
 
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        this.dateString = `${year}-${month}-${day}`;
+
         // Sistema de puntuación
         this.currentPoints = 1000;
         this.startTime = Date.now();
@@ -212,6 +218,7 @@ class WordleHKU {
             this.gameOver = true;
             this.showMessage('Congratulations! 🎉');
             this.updateStats(true);
+            localStorage.setItem('wordle-completed-' + this.dateString, 'true');
         } else if (this.currentRow === this.maxAttempts - 1) {
             this.gameOver = true;
             this.showMessage(`The word was: ${this.currentWord}`);
@@ -378,6 +385,42 @@ class WordleHKU {
     }
 }
 
+class Calendar {
+    constructor(words) {
+        this.words = words;
+    }
+
+    renderCalendar() {
+        const calendarEl = document.getElementById('calendar');
+        if (!calendarEl) return;
+
+        calendarEl.innerHTML = '';
+        const today = new Date();
+
+        this.words.forEach(entry => {
+            const date = new Date(entry.date);
+            const dateString = entry.date;
+            const dayEl = document.createElement('div');
+            dayEl.classList.add('calendar-day');
+
+            if (date.toDateString() === today.toDateString()) {
+                dayEl.classList.add('today');
+            } else if (date < today) {
+                dayEl.classList.add('past');
+            } else {
+                dayEl.classList.add('future');
+            }
+
+            if (localStorage.getItem('wordle-completed-' + dateString) === 'true') {
+                dayEl.classList.add('completed');
+            }
+
+            dayEl.textContent = date.getDate();
+            calendarEl.appendChild(dayEl);
+        });
+    }
+}
+
 async function initializeGame() {
     try {
         const response = await fetch('palabras.json');
@@ -392,6 +435,9 @@ async function initializeGame() {
         const month = (today.getMonth() + 1).toString().padStart(2, '0');
         const day = today.getDate().toString().padStart(2, '0');
         const todayString = `${year}-${month}-${day}`;
+
+        const calendar = new Calendar(data.words);
+        calendar.renderCalendar();
 
         // Buscar la palabra correspondiente a la fecha de hoy
         const wordData = data.words.find(w => w.date === todayString);
