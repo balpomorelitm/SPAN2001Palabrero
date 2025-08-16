@@ -175,29 +175,54 @@ class WordleHKU {
         }
     }
 
-    submitGuess() {
-        const wordLength = this.currentWord.length;
-        if (this.currentCol !== wordLength) {
-            this.showMessage('¡Completa la palabra!');
-            return;
-        }
-
-        const guess = this.getCurrentGuess();
-        this.checkGuess(guess);
-        
-        if (guess === this.currentWord) {
-            this.gameOver = true;
-            this.showMessage('¡Felicitaciones! 🎉');
-            this.updateStats(true);
-        } else if (this.currentRow === this.maxAttempts - 1) {
-            this.gameOver = true;
-            this.showMessage(`La palabra era: ${this.currentWord}`);
-            this.updateStats(false);
-        } else {
-            this.currentRow++;
-            this.currentCol = 0;
-        }
+    async submitGuess() {
+    const wordLength = this.currentWord.length;
+    if (this.currentCol !== wordLength) {
+        this.showMessage('¡Completa la palabra!');
+        return;
     }
+
+    const guess = this.getCurrentGuess();
+
+    // --- NUEVA SECCIÓN DE VALIDACIÓN ---
+    // Mostrar mensaje de "Verificando palabra..." mientras se valida
+    this.showMessage('Verificando palabra...', false); // false = no auto-ocultar
+    
+    const isValid = await this.isValidSpanishWord(guess);
+    
+    // Ocultar mensaje de verificación
+    document.getElementById('message').style.display = 'none';
+    
+    if (!isValid) {
+        this.showMessage('Palabra no encontrada en el diccionario');
+        // Añadir animación de "temblor" a la fila actual
+        const currentRowElement = document.querySelector(`#game-board .word-row:nth-child(${this.currentRow + 1})`);
+        if (currentRowElement) {
+            currentRowElement.classList.add('shake');
+            setTimeout(() => {
+                currentRowElement.classList.remove('shake');
+            }, 500);
+        }
+        return; // Detenemos la función aquí, no se cuenta como intento
+    }
+    // --- FIN DE LA NUEVA SECCIÓN ---
+
+    // El resto de la función sigue igual
+    this.checkGuess(guess);
+    
+    if (guess === this.currentWord) {
+        this.gameOver = true;
+        this.showMessage('¡Felicitaciones! 🎉');
+        this.updateStats(true);
+    } else if (this.currentRow === this.maxAttempts - 1) {
+        this.gameOver = true;
+        this.showMessage(`La palabra era: ${this.currentWord}`);
+        this.updateStats(false);
+    } else {
+        this.currentRow++;
+        this.currentCol = 0;
+    }
+}
 
     getCurrentGuess() {
         let guess = '';
@@ -254,7 +279,21 @@ class WordleHKU {
             key.className = 'key absent';
         }
     }
+async isValidSpanishWord(word) {
+    try {
+        const url = `https://api.dictionaryapi.dev/api/v2/entries/es/${word.toLowerCase()}`;
+        const response = await fetch(url);
+        
+        // Si la respuesta es OK (código 200), la palabra existe.
+        // Si la respuesta es un error (como 404), la palabra no fue encontrada.
+        return response.ok;
 
+    } catch (error) {
+        console.error("Error al contactar la API del diccionario:", error);
+        // En caso de un fallo de red, asumimos que la palabra es válida para no bloquear el juego.
+        return true; 
+    }
+}
     showHint() {
         if (this.hintUsed) return;
         
@@ -271,15 +310,17 @@ class WordleHKU {
         this.updateScore();
     }
 
-    showMessage(text) {
-        const message = document.getElementById('message');
-        message.textContent = text;
-        message.style.display = 'block';
-        
+showMessage(text, autoHide = true) {
+    const message = document.getElementById('message');
+    message.textContent = text;
+    message.style.display = 'block';
+    
+    if (autoHide) {
         setTimeout(() => {
             message.style.display = 'none';
         }, 2000);
     }
+}
 
     loadStats() {
         const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
