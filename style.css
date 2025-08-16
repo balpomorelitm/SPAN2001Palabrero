@@ -407,3 +407,30 @@ body {
         font-size: 1.2em;
     }
 }
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translateX(-1px);
+    }
+    
+    20%, 80% {
+        transform: translateX(2px);
+    }
+
+    30%, 50%, 70% {
+        transform: translateX(-4px);
+    }
+
+    40%, 60% {
+        transform: translateX(4px);
+    }
+}
+
+/* Mensaje de verificación con estilo diferente */
+.message.verifying {
+    background: linear-gradient(135deg, #0075A8, #00A651);
+    border-color: #FFED4E;
+}
