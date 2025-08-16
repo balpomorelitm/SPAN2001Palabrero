@@ -434,3 +434,68 @@ body {
     background: linear-gradient(135deg, #0075A8, #00A651);
     border-color: #FFED4E;
 }
+.calendar-button {
+    background: linear-gradient(45deg, #FFED4E, #DC6900);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    color: #3B1F00;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.calendar-button:hover {
+    background: linear-gradient(45deg, #DC6900, #FFED4E);
+    transform: translateY(-2px);
+}
+
+.calendar-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.calendar-content {
+    background: #fff;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    padding: 20px;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+.calendar-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.calendar-day.available {
+    background: linear-gradient(135deg, #00A651, #0075A8);
+    color: #fff;
+}
+.calendar-day.completed {
+    background: linear-gradient(135deg, #FFED4E, #DC6900);
+    color: #3B1F00;
+}
+.calendar-day.today {
+    border: 3px solid #3B1F00;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.calendar-day.unavailable {
+    background: #ccc;
+    cursor: not-allowed;
+}
+.calendar-day.future {
+    background: #f0f0f0;
+    cursor: not-allowed;
+}
