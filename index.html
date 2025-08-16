@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPAN1001 Palabrarero</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Rampart+One&family=Clear+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    </head>
+    
+    <link rel="stylesheet" href="style.css">
+
+</head>
 <body>
     <div class="header">
         <h1>
@@ -22,45 +26,16 @@
 
     <div class="game-container">
         <div class="game-info">
-            <div class="stats">
-                <div class="stats-number" id="games-played">0</div>
-                <div>Jugadas</div>
             </div>
-            <div class="stats">
-                <div class="stats-number" id="win-percentage">0%</div>
-                <div>% Victorias</div>
-            </div>
-            <div class="stats">
-                <div class="stats-number" id="current-streak">0</div>
-                <div>Racha</div>
-            </div>
-            <div class="stats">
-                <div class="stats-number" id="total-points">0</div>
-                <div>Puntos Totales</div>
-            </div>
-        </div>
 
         <div class="hint-section">
-            <button class="hint-button" id="hint-btn">💡 Obtener Pista</button>
-            <div class="hint-display" id="hint-display"></div>
-        </div>
-
-        <div class="game-board" id="game-board">
             </div>
 
-        <div class="keyboard" id="keyboard">
-            </div>
+        <div class="game-board" id="game-board"></div>
+        <div class="keyboard" id="keyboard"></div>
 
         <div class="score-display">
-            <div class="current-score">
-                <span class="score-label">Puntos actuales:</span>
-                <span class="score-number" id="current-points">1000</span>
             </div>
-            <div class="timer-display">
-                <span class="timer-label">⏱️ Tiempo:</span>
-                <span class="timer-number" id="game-timer">00:00</span>
-            </div>
-        </div>
     </div>
 
     <div class="message" id="message"></div>
@@ -69,5 +44,7 @@
         <p>SPAN1001 Palabrarero • HKU Spanish Department</p>
     </div>
 
-    </body>
+    <script src="script.js"></script>
+
+</body>
 </html>
