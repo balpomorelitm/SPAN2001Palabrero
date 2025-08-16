@@ -1,6 +1,6 @@
 # 🎓 SPAN1001 Palabrero
 
-## Un Juego de Wordle para Estudiantes de Español
+## Un Juego de tipo wordle para Estudiantes de Español de la HKU
 
 `SPAN1001 Palabrero` es una versión personalizada del popular juego de palabras Wordle, diseñada específicamente para los estudiantes del curso de español SPAN1001 en la Universidad de Hong Kong (HKU). El objetivo es reforzar el vocabulario aprendido en clase de una manera divertida e interactiva.
 
