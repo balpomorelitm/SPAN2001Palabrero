@@ -280,18 +280,44 @@ class WordleHKU {
         }
     }
 async isValidSpanishWord(word) {
+    const wordLower = word.toLowerCase();
+    
+    // Primero intentar con Datamuse (más rápido)
     try {
-        const url = `https://api.dictionaryapi.dev/api/v2/entries/es/${word.toLowerCase()}`;
-        const response = await fetch(url);
+        const url1 = `https://api.datamuse.com/words?sp=${wordLower}&lc=es&max=1`;
+        const response1 = await fetch(url1);
         
-        // Si la respuesta es OK (código 200), la palabra existe.
-        // Si la respuesta es un error (como 404), la palabra no fue encontrada.
-        return response.ok;
-
+        if (response1.ok) {
+            const data1 = await response1.json();
+            if (data1.length > 0 && data1[0].word.toLowerCase() === wordLower) {
+                return true;
+            }
+        }
     } catch (error) {
-        console.error("Error al contactar la API del diccionario:", error);
-        // En caso de un fallo de red, asumimos que la palabra es válida para no bloquear el juego.
-        return true; 
+        console.log("Datamuse falló, intentando con RAE...");
+    }
+    
+    // Si falla, intentar con RAE
+    try {
+        const url2 = `https://dle.rae.es/data/search?w=${wordLower}`;
+        const response2 = await fetch(url2);
+        
+        if (response2.ok) {
+            const data2 = await response2.json();
+            return data2.res && data2.res.length > 0;
+        }
+    } catch (error) {
+        console.log("RAE también falló");
+    }
+    
+    // Si ambas fallan, intentar con la API original pero aceptar cualquier respuesta válida
+    try {
+        const url3 = `https://api.dictionaryapi.dev/api/v2/entries/es/${wordLower}`;
+        const response3 = await fetch(url3);
+        return response3.ok;
+    } catch (error) {
+        console.error("Todas las APIs fallaron:", error);
+        return true; // Fallback: aceptar la palabra
     }
 }
     showHint() {
