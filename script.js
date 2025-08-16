@@ -387,13 +387,16 @@ class WordleHKU {
     }
 }
 
+let currentGame;
+let wordsData;
+
 async function initializeGame() {
     try {
         const response = await fetch('palabras.json');
         if (!response.ok) {
             throw new Error('Could not load words file (palabras.json).');
         }
-        const data = await response.json();
+        wordsData = await response.json();
 
         // Obtener la fecha de hoy en formato AAAA-MM-DD
         const today = new Date();
@@ -403,11 +406,12 @@ async function initializeGame() {
         const todayString = `${year}-${month}-${day}`;
 
         // Buscar la palabra correspondiente a la fecha de hoy
-        const wordData = data.words.find(w => w.date === todayString);
+        const wordData = wordsData.words.find(w => w.date === todayString);
 
         if (wordData && wordData.word) {
             // Si se encuentra la palabra para hoy, se crea una nueva instancia del juego
-            new WordleHKU(wordData.word, wordData.hint);
+            currentGame = new WordleHKU(wordData.word, wordData.hint);
+            new Calendar();
         } else {
             // Mensaje si no hay palabra asignada para el día
             document.querySelector('.game-container').innerHTML = '<h1>No word scheduled for today.</h1>';
