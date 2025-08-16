@@ -499,3 +499,91 @@ body {
     background: #f0f0f0;
     cursor: not-allowed;
 }
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #DC6900;
+}
+
+.calendar-header h3 {
+    color: #3B1F00;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.calendar-nav {
+    background: #00A651;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendar-nav:hover {
+    background: #008a44;
+    transform: scale(1.1);
+}
+
+.calendar-close {
+    background: #DC6900;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendar-close:hover {
+    background: #b85500;
+    transform: scale(1.1);
+}
+
+.calendar-day-header {
+    background: #3B1F00;
+    color: white;
+    padding: 10px 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.calendar-day:hover {
+    transform: scale(1.05);
+}
+
+.calendar-day.available:hover {
+    background: linear-gradient(135deg, #008a44, #005c85);
+    border-color: #FFED4E;
+}
+
+.calendar-day.completed:hover {
+    background: linear-gradient(135deg, #DC6900, #FFED4E);
+}
+
+/* Responsive para calendario */
+@media (max-width: 600px) {
+    .calendar-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .calendar-day {
+        font-size: 12px;
+    }
+    
+    .calendar-header h3 {
+        font-size: 1.1em;
+    }
+}
