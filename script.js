@@ -1,17 +1,22 @@
 class WordleHKU {
-    constructor(word, hint) {
+    constructor(word, hint, isArchiveMode = false) {
         this.currentWord = word.toUpperCase();
         this.currentHint = hint;
         this.currentRow = 0;
         this.currentCol = 0;
         this.gameOver = false;
         this.hintUsed = false;
+        this.isArchiveMode = isArchiveMode;
 
         // Sistema de puntuación
         this.currentPoints = 1000;
         this.startTime = Date.now();
         this.gameTimer = null;
         this.lastMinuteDeduction = 0;
+
+        if (this.isArchiveMode) {
+            this.showMessage('Archive mode - No points earned');
+        }
         
         // Determinar número de intentos según longitud
         const wordLength = this.currentWord.length;
@@ -34,7 +39,7 @@ class WordleHKU {
     startTimer() {
         this.gameTimer = setInterval(() => {
             this.updateTimer();
-            this.updateScore();
+            if (!this.isArchiveMode) { this.updateScore(); }
         }, 1000);
     }
 
@@ -50,6 +55,7 @@ class WordleHKU {
     }
 
     updateScore() {
+        if (this.isArchiveMode) return;
         if (this.gameOver) return;
         
         const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
@@ -320,9 +326,10 @@ class WordleHKU {
         hintBtn.disabled = true;
         hintBtn.textContent = 'Hint used';
         this.hintUsed = true;
-        
-        this.currentPoints = Math.max(100, this.currentPoints - 100);
-        this.updateScore();
+        if (!this.isArchiveMode) {
+            this.currentPoints = Math.max(100, this.currentPoints - 100);
+            this.updateScore();
+        }
     }
 
     showMessage(text, autoHide = true) {
@@ -356,7 +363,9 @@ class WordleHKU {
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
         }
-        
+
+        if (this.isArchiveMode) return;
+
         const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
             gamesPlayed: 0,
             gamesWon: 0,
