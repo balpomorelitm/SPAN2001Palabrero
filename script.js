@@ -193,33 +193,73 @@ class WordleHKU {
     // Ocultar mensaje de verificación
     document.getElementById('message').style.display = 'none';
     
-  async isValidSpanishWord(word) {
+ async isValidSpanishWord(word) {
+    const wordLower = word.toLowerCase();
+    
+    // OPCIÓN 1: Intentar con Wiktionary (más confiable para diccionario)
     try {
-        // Usar LibreTranslate para verificar si es una palabra válida
-        const url = `https://libretranslate.de/detect`;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                q: word.toLowerCase()
-            })
-        });
+        const wiktionaryUrl = `https://es.wiktionary.org/api/rest_v1/page/summary/${encodeURIComponent(wordLower)}`;
+        const wiktionaryResponse = await fetch(wiktionaryUrl);
         
-        if (response.ok) {
-            const data = await response.json();
-            // Si detecta español con alta confianza, probablemente es válida
-            return data.some(lang => lang.language === 'es' && lang.confidence > 0.7);
+        if (wiktionaryResponse.ok) {
+            const wiktionaryData = await wiktionaryResponse.json();
+            
+            // Si encuentra la página y es una entrada estándar
+            if (wiktionaryData.type === 'standard' && 
+                !wiktionaryData.title.toLowerCase().includes('no existe') &&
+                !wiktionaryData.title.toLowerCase().includes('not found')) {
+                console.log(`✅ Palabra "${word}" encontrada en Wiktionary`);
+                return true;
+            }
+            
+            // Si Wiktionary retorna que no existe, intentar con MyMemory
+            console.log(`⚠️ Palabra "${word}" no encontrada en Wiktionary, probando MyMemory...`);
         }
-        return false;
-
     } catch (error) {
-        console.error("Error con LibreTranslate:", error);
-        return true;
+        console.log(`❌ Error con Wiktionary para "${word}":`, error.message);
+        console.log("🔄 Intentando con MyMemory...");
     }
+    
+    // OPCIÓN 2: Respaldo con MyMemory Translation
+    try {
+        const mymemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(wordLower)}&langpair=es|en`;
+        const mymemoryResponse = await fetch(mymemoryUrl);
+        
+        if (mymemoryResponse.ok) {
+            const mymemoryData = await mymemoryResponse.json();
+            
+            // Verificar si la respuesta es válida
+            if (mymemoryData.responseStatus === 200) {
+                const translation = mymemoryData.responseData.translatedText.toLowerCase();
+                
+                // La palabra es válida si:
+                // 1. Se tradujo a algo diferente (no es igual a la palabra original)
+                // 2. No contiene mensajes de error
+                // 3. La traducción no está vacía
+                const isValidTranslation = translation !== wordLower && 
+                                         translation.length > 0 &&
+                                         !translation.includes('no found') &&
+                                         !translation.includes('not found') &&
+                                         !translation.includes('error') &&
+                                         !translation.includes('invalid');
+                
+                if (isValidTranslation) {
+                    console.log(`✅ Palabra "${word}" validada por MyMemory (traducción: "${translation}")`);
+                    return true;
+                } else {
+                    console.log(`❌ Palabra "${word}" no válida según MyMemory`);
+                    return false;
+                }
+            }
+        }
+    } catch (error) {
+        console.log(`❌ Error con MyMemory para "${word}":`, error.message);
+    }
+    
+    // FALLBACK: Si ambas APIs fallan, permitir la palabra para no bloquear el juego
+    console.log(`⚠️ Ambas APIs fallaron para "${word}", permitiendo por defecto`);
+    return true;
 }
-
     getCurrentGuess() {
         let guess = '';
         const wordLength = this.currentWord.length;
