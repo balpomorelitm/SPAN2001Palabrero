@@ -474,69 +474,68 @@ class Calendar {
         this.renderCalendar();
     }
 
-    renderCalendar() {
-        const daysContainer = document.getElementById('calendar-grid');
-        const header = document.getElementById('calendar-month-year');
-        if (!daysContainer || !header || !wordsData) return;
-
-        daysContainer.innerHTML = '';
-
-        const year = currentCalendarDate.getFullYear();
-        const month = currentCalendarDate.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const firstDayIndex = firstDay.getDay();
-        const currentDate = new Date(firstDay);
-        currentDate.setDate(currentDate.getDate() - firstDayIndex);
-
-        const today = new Date();
-        const gameStartDate = new Date('2025-08-15');
-
-        for (let i = 0; i < 42; i++) {
-            const dayElement = document.createElement('div');
-            dayElement.className = 'calendar-day';
-
-            const dateString = this.formatDate(currentDate);
-            dayElement.textContent = currentDate.getDate();
-
-            const isCurrentMonth = currentDate.getMonth() === month;
-            const isToday = this.isSameDay(currentDate, today);
-            const isFuture = currentDate > today;
-            const isBeforeGameStart = currentDate < gameStartDate;
-            const hasWord = wordsData.words.some(w => w.date === dateString);
-            const completed = localStorage.getItem(`wordle-completed-${dateString}`) === 'true';
-
-            if (!isCurrentMonth) {
-                dayElement.style.opacity = '0.3';
-            }
-
-            if (isToday) {
-                dayElement.classList.add('today');
-            }
-
-            if (isFuture || isBeforeGameStart) {
-                dayElement.classList.add(isFuture ? 'future' : 'unavailable');
-            } else if (hasWord) {
-                dayElement.classList.add(completed ? 'completed' : 'available');
-
-                if (!isFuture && !isBeforeGameStart) {
-                    dayElement.addEventListener('click', () => {
-                        this.selectDate(dateString);
-                    });
-                }
-            } else {
-                dayElement.classList.add('unavailable');
-            }
-
-            daysContainer.appendChild(dayElement);
-            currentDate.setDate(currentDate.getDate() + 1);
+renderCalendar() {
+    const daysContainer = document.getElementById('calendar-grid');
+    const header = document.getElementById('calendar-month-year');
+    if (!daysContainer || !header || !wordsData) return;
+    
+    daysContainer.innerHTML = '';
+    
+    const year = currentCalendarDate.getFullYear();
+    const month = currentCalendarDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const firstDayIndex = firstDay.getDay();
+    const currentDate = new Date(firstDay);
+    currentDate.setDate(currentDate.getDate() - firstDayIndex);
+    
+    const today = new Date();
+    
+    for (let i = 0; i < 42; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        
+        const dateString = this.formatDate(currentDate);
+        dayElement.textContent = currentDate.getDate();
+        
+        const isCurrentMonth = currentDate.getMonth() === month;
+        const isToday = this.isSameDay(currentDate, today);
+        const isFuture = currentDate > today;
+        const isBeforeGameStart = dateString < '2025-08-15'; // LÍNEA CAMBIADA
+        const hasWord = wordsData.words.some(w => w.date === dateString);
+        const completed = localStorage.getItem(`wordle-completed-${dateString}`) === 'true';
+        
+        if (!isCurrentMonth) {
+            dayElement.style.opacity = '0.3';
         }
-
-        const monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-        header.textContent = `${monthNames[month]} ${year}`;
+        
+        if (isToday) {
+            dayElement.classList.add('today');
+        }
+        
+        if (isFuture || isBeforeGameStart) {
+            dayElement.classList.add(isFuture ? 'future' : 'unavailable');
+        } else if (hasWord) {
+            dayElement.classList.add(completed ? 'completed' : 'available');
+            
+            if (!isFuture && !isBeforeGameStart) {
+                dayElement.addEventListener('click', () => {
+                    this.selectDate(dateString);
+                });
+            }
+        } else {
+            dayElement.classList.add('unavailable');
+        }
+        
+        daysContainer.appendChild(dayElement);
+        currentDate.setDate(currentDate.getDate() + 1);
     }
+    
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    header.textContent = `${monthNames[month]} ${year}`;
+}
 
     async selectDate(dateString) {
         this.closeCalendar();
