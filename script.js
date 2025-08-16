@@ -1,11 +1,12 @@
 class WordleHKU {
-    constructor(word, hint) {
+    constructor(word, hint, isArchiveMode = false) {
         this.currentWord = word.toUpperCase();
         this.currentHint = hint;
         this.currentRow = 0;
         this.currentCol = 0;
         this.gameOver = false;
         this.hintUsed = false;
+        this.isArchiveMode = isArchiveMode;
 
         const today = new Date();
         const year = today.getFullYear();
@@ -18,6 +19,10 @@ class WordleHKU {
         this.startTime = Date.now();
         this.gameTimer = null;
         this.lastMinuteDeduction = 0;
+
+        if (this.isArchiveMode) {
+            this.showMessage('Archive mode - No points earned');
+        }
         
         // Determinar número de intentos según longitud
         const wordLength = this.currentWord.length;
@@ -40,7 +45,7 @@ class WordleHKU {
     startTimer() {
         this.gameTimer = setInterval(() => {
             this.updateTimer();
-            this.updateScore();
+            if (!this.isArchiveMode) { this.updateScore(); }
         }, 1000);
     }
 
@@ -56,6 +61,7 @@ class WordleHKU {
     }
 
     updateScore() {
+        if (this.isArchiveMode) return;
         if (this.gameOver) return;
         
         const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
@@ -327,9 +333,10 @@ class WordleHKU {
         hintBtn.disabled = true;
         hintBtn.textContent = 'Hint used';
         this.hintUsed = true;
-        
-        this.currentPoints = Math.max(100, this.currentPoints - 100);
-        this.updateScore();
+        if (!this.isArchiveMode) {
+            this.currentPoints = Math.max(100, this.currentPoints - 100);
+            this.updateScore();
+        }
     }
 
     showMessage(text, autoHide = true) {
@@ -363,7 +370,9 @@ class WordleHKU {
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
         }
-        
+
+        if (this.isArchiveMode) return;
+
         const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
             gamesPlayed: 0,
             gamesWon: 0,
@@ -421,13 +430,14 @@ class Calendar {
     }
 }
 
+
 async function initializeGame() {
     try {
         const response = await fetch('palabras.json');
         if (!response.ok) {
             throw new Error('Could not load words file (palabras.json).');
         }
-        const data = await response.json();
+        wordsData = await response.json();
 
         // Obtener la fecha de hoy en formato AAAA-MM-DD
         const today = new Date();
@@ -440,11 +450,12 @@ async function initializeGame() {
         calendar.renderCalendar();
 
         // Buscar la palabra correspondiente a la fecha de hoy
-        const wordData = data.words.find(w => w.date === todayString);
+        const wordData = wordsData.words.find(w => w.date === todayString);
 
         if (wordData && wordData.word) {
             // Si se encuentra la palabra para hoy, se crea una nueva instancia del juego
-            new WordleHKU(wordData.word, wordData.hint);
+            currentGame = new WordleHKU(wordData.word, wordData.hint);
+            new Calendar();
         } else {
             // Mensaje si no hay palabra asignada para el día
             document.querySelector('.game-container').innerHTML = '<h1>No word scheduled for today.</h1>';
