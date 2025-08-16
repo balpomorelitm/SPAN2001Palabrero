@@ -434,3 +434,90 @@ body {
     background: linear-gradient(135deg, #0075A8, #00A651);
     border-color: #FFED4E;
 }
+
+/* Calendar styles */
+.calendar-section {
+    margin-bottom: 20px;
+}
+
+.calendar-button {
+    padding: 10px 20px;
+    background: #FFED4E;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.calendar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.calendar-container .calendar {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 40px);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.calendar-day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-day.available {
+    background: linear-gradient(135deg, #00A651, #0075A8);
+    color: white;
+}
+
+.calendar-day.completed {
+    background: linear-gradient(135deg, #FFED4E, #DC6900);
+    color: white;
+}
+
+.calendar-day.unavailable {
+    background: #ccc;
+    color: #777;
+    cursor: default;
+}
+
+.calendar-day.future {
+    background: #eee;
+    color: #aaa;
+    cursor: default;
+}
+
+.calendar-day.today {
+    border: 2px solid #3B1F00;
+}
+
+.calendar-close-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #DC6900;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

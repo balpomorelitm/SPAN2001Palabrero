@@ -1,11 +1,27 @@
+let currentGame = null;
+let wordsData = null;
+let calendar = null;
+
 class WordleHKU {
-    constructor(word, hint) {
+    constructor(word, hint, isArchiveMode = false, dateString = null) {
         this.currentWord = word.toUpperCase();
         this.currentHint = hint;
         this.currentRow = 0;
         this.currentCol = 0;
         this.gameOver = false;
         this.hintUsed = false;
+
+        this.isArchiveMode = isArchiveMode;
+        this.dateString = dateString;
+
+        if (dateString) {
+            this.alreadyCompleted = localStorage.getItem(`wordle-completed-${dateString}`) === 'true';
+        } else {
+            const today = new Date();
+            const todayString = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+            this.alreadyCompleted = localStorage.getItem(`wordle-completed-${todayString}`) === 'true';
+            this.dateString = todayString;
+        }
 
         // Sistema de puntuación
         this.currentPoints = 1000;
@@ -27,15 +43,26 @@ class WordleHKU {
         this.createBoard();
         this.createKeyboard();
         this.setupEventListeners();
+        // Mostrar mensaje si ya se completó hoy
+        if (this.alreadyCompleted && !isArchiveMode) {
+            this.showMessage('Already completed today - No points will be earned', true);
+        }
+
         this.startTimer();
-        
+
     }
 
     startTimer() {
-        this.gameTimer = setInterval(() => {
-            this.updateTimer();
-            this.updateScore();
-        }, 1000);
+        if (this.isArchiveMode || this.alreadyCompleted) {
+            this.gameTimer = setInterval(() => {
+                this.updateTimer();
+            }, 1000);
+        } else {
+            this.gameTimer = setInterval(() => {
+                this.updateTimer();
+                this.updateScore();
+            }, 1000);
+        }
     }
 
     updateTimer() {
@@ -50,7 +77,7 @@ class WordleHKU {
     }
 
     updateScore() {
-        if (this.gameOver) return;
+        if (this.gameOver || this.isArchiveMode || this.alreadyCompleted) return;
         
         const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
         const minutes = Math.floor(elapsed / 60);
@@ -320,9 +347,11 @@ class WordleHKU {
         hintBtn.disabled = true;
         hintBtn.textContent = 'Hint used';
         this.hintUsed = true;
-        
-        this.currentPoints = Math.max(100, this.currentPoints - 100);
-        this.updateScore();
+
+        if (!this.isArchiveMode && !this.alreadyCompleted) {
+            this.currentPoints = Math.max(100, this.currentPoints - 100);
+            this.updateScore();
+        }
     }
 
     showMessage(text, autoHide = true) {
@@ -356,7 +385,17 @@ class WordleHKU {
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
         }
-        
+
+        const todayString = this.dateString;
+        const alreadyCompleted = localStorage.getItem(`wordle-completed-${todayString}`);
+
+        if (this.isArchiveMode) return;
+
+        if (alreadyCompleted && won) {
+            this.showMessage('Well done, but no points this time!');
+            return;
+        }
+
         const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
             gamesPlayed: 0,
             gamesWon: 0,
@@ -369,12 +408,130 @@ class WordleHKU {
             stats.gamesWon++;
             stats.currentStreak++;
             stats.totalPoints += this.currentPoints;
+            localStorage.setItem(`wordle-completed-${todayString}`, 'true');
         } else {
             stats.currentStreak = 0;
         }
 
         localStorage.setItem('wordleHKU-stats', JSON.stringify(stats));
         this.loadStats();
+    }
+}
+
+class Calendar {
+    constructor() {
+        this.overlay = document.getElementById('calendar-overlay');
+        this.container = document.getElementById('calendar-container');
+        this.currentDate = new Date();
+    }
+
+    openCalendar() {
+        this.renderCalendar();
+        if (this.overlay) {
+            this.overlay.style.display = 'flex';
+        }
+    }
+
+    closeCalendar() {
+        if (this.overlay) {
+            this.overlay.style.display = 'none';
+        }
+    }
+
+    isSameDay(d1, d2) {
+        return d1.getFullYear() === d2.getFullYear() &&
+               d1.getMonth() === d2.getMonth() &&
+               d1.getDate() === d2.getDate();
+    }
+
+    async selectDate(dateString) {
+        this.closeCalendar();
+
+        const wordData = wordsData.words.find(w => w.date === dateString);
+        if (wordData) {
+            const today = new Date();
+            const selectedDate = new Date(dateString);
+            const isToday = this.isSameDay(selectedDate, today);
+
+            if (currentGame && currentGame.gameTimer) {
+                clearInterval(currentGame.gameTimer);
+            }
+
+            currentGame = new WordleHKU(wordData.word, wordData.hint, !isToday, dateString);
+        }
+    }
+
+    renderCalendar() {
+        if (!this.container || !wordsData) return;
+
+        const year = this.currentDate.getFullYear();
+        const month = this.currentDate.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const startDay = firstDay.getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+        const gameStartDate = wordsData.words.length > 0 ? new Date(wordsData.words[0].date) : today;
+
+        this.container.innerHTML = '';
+
+        const calendarEl = document.createElement('div');
+        calendarEl.className = 'calendar';
+
+        const header = document.createElement('div');
+        header.className = 'calendar-header';
+        header.textContent = `${year}-${(month + 1).toString().padStart(2, '0')}`;
+        calendarEl.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.className = 'calendar-grid';
+
+        for (let i = 0; i < startDay; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'calendar-day empty';
+            grid.appendChild(empty);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            const hasWord = wordsData.words.some(w => w.date === dateString);
+            const isToday = this.isSameDay(date, today);
+            const isFuture = date > today;
+            const isBeforeGameStart = date < gameStartDate;
+
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            dayElement.textContent = day;
+
+            const completed = localStorage.getItem(`wordle-completed-${dateString}`) === 'true';
+
+            if (isToday) {
+                dayElement.classList.add('today');
+            }
+
+            if (isFuture || isBeforeGameStart) {
+                dayElement.classList.add(isFuture ? 'future' : 'unavailable');
+            } else if (hasWord) {
+                dayElement.classList.add(completed ? 'completed' : 'available');
+                dayElement.addEventListener('click', () => {
+                    this.selectDate(dateString);
+                });
+            } else {
+                dayElement.classList.add('unavailable');
+            }
+
+            grid.appendChild(dayElement);
+        }
+
+        calendarEl.appendChild(grid);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'calendar-close-btn';
+        closeBtn.textContent = 'Close';
+        closeBtn.addEventListener('click', () => this.closeCalendar());
+        calendarEl.appendChild(closeBtn);
+
+        this.container.appendChild(calendarEl);
     }
 }
 
@@ -385,6 +542,7 @@ async function initializeGame() {
             throw new Error('Could not load words file (palabras.json).');
         }
         const data = await response.json();
+        wordsData = data;
 
         // Obtener la fecha de hoy en formato AAAA-MM-DD
         const today = new Date();
@@ -397,12 +555,18 @@ async function initializeGame() {
         const wordData = data.words.find(w => w.date === todayString);
 
         if (wordData && wordData.word) {
-            // Si se encuentra la palabra para hoy, se crea una nueva instancia del juego
-            new WordleHKU(wordData.word, wordData.hint);
+            currentGame = new WordleHKU(wordData.word, wordData.hint, false, todayString);
         } else {
             // Mensaje si no hay palabra asignada para el día
             document.querySelector('.game-container').innerHTML = '<h1>No word scheduled for today.</h1>';
             console.error('No word found for date:', todayString);
+        }
+        calendar = new Calendar();
+        const btn = document.getElementById('calendar-btn');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                calendar.openCalendar();
+            });
         }
     } catch (error) {
         console.error('Error initializing game:', error);
