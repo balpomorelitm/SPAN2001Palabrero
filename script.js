@@ -193,34 +193,30 @@ class WordleHKU {
     // Ocultar mensaje de verificación
     document.getElementById('message').style.display = 'none';
     
-    if (!isValid) {
-        this.showMessage('Palabra no encontrada en el diccionario');
-        // Añadir animación de "temblor" a la fila actual
-        const currentRowElement = document.querySelector(`#game-board .word-row:nth-child(${this.currentRow + 1})`);
-        if (currentRowElement) {
-            currentRowElement.classList.add('shake');
-            setTimeout(() => {
-                currentRowElement.classList.remove('shake');
-            }, 500);
+  async isValidSpanishWord(word) {
+    try {
+        // Usar LibreTranslate para verificar si es una palabra válida
+        const url = `https://libretranslate.de/detect`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                q: word.toLowerCase()
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            // Si detecta español con alta confianza, probablemente es válida
+            return data.some(lang => lang.language === 'es' && lang.confidence > 0.7);
         }
-        return; // Detenemos la función aquí, no se cuenta como intento
-    }
-    // --- FIN DE LA NUEVA SECCIÓN ---
+        return false;
 
-    // El resto de la función sigue igual
-    this.checkGuess(guess);
-    
-    if (guess === this.currentWord) {
-        this.gameOver = true;
-        this.showMessage('¡Felicitaciones! 🎉');
-        this.updateStats(true);
-    } else if (this.currentRow === this.maxAttempts - 1) {
-        this.gameOver = true;
-        this.showMessage(`La palabra era: ${this.currentWord}`);
-        this.updateStats(false);
-    } else {
-        this.currentRow++;
-        this.currentCol = 0;
+    } catch (error) {
+        console.error("Error con LibreTranslate:", error);
+        return true;
     }
 }
 
