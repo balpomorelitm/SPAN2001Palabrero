@@ -300,3 +300,60 @@ class WordleHKU {
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
         }
+        
+        const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
+            gamesPlayed: 0,
+            gamesWon: 0,
+            currentStreak: 0,
+            totalPoints: 0
+        };
+
+        stats.gamesPlayed++;
+        if (won) {
+            stats.gamesWon++;
+            stats.currentStreak++;
+            stats.totalPoints += this.currentPoints;
+        } else {
+            stats.currentStreak = 0;
+        }
+
+        localStorage.setItem('wordleHKU-stats', JSON.stringify(stats));
+        this.loadStats();
+    }
+}
+
+async function initializeGame() {
+    try {
+        const response = await fetch('palabras.json');
+        if (!response.ok) {
+            throw new Error('No se pudo cargar el archivo de palabras (palabras.json).');
+        }
+        const data = await response.json();
+
+        // Obtener la fecha de hoy en formato AAAA-MM-DD
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, '0');
+        const day = today.getDate().toString().padStart(2, '0');
+        const todayString = `${year}-${month}-${day}`;
+
+        // Buscar la palabra correspondiente a la fecha de hoy
+        const wordData = data.words.find(w => w.date === todayString);
+
+        if (wordData && wordData.word) {
+            // Si se encuentra la palabra para hoy, se crea una nueva instancia del juego
+            new WordleHKU(wordData.word, wordData.hint);
+        } else {
+            // Mensaje si no hay palabra asignada para el día
+            document.querySelector('.game-container').innerHTML = '<h1>No hay palabra programada para hoy.</h1>';
+            console.error('No se encontró una palabra para la fecha:', todayString);
+        }
+    } catch (error) {
+        console.error('Error al inicializar el juego:', error);
+        document.querySelector('.game-container').innerHTML = '<h1>Error al cargar el juego.</h1>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeGame();
+});
