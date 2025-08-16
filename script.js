@@ -223,70 +223,37 @@ class WordleHKU {
         }
     }
 
-    // FUNCIÓN DE VALIDACIÓN WIKTIONARY + MYMEMORY
-    async isValidSpanishWord(word) {
-        const wordLower = word.toLowerCase();
+   async isValidSpanishWord(word) {
+    const wordLower = word.toLowerCase();
+    
+    try {
+        const mymemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(wordLower)}&langpair=es|en`;
+        const mymemoryResponse = await fetch(mymemoryUrl);
         
-        console.log(`🔍 Checking word: "${word}"`);
-        
-        // OPCIÓN 1: Intentar con Wiktionary
-        try {
-            const wiktionaryUrl = `https://es.wiktionary.org/api/rest_v1/page/summary/${encodeURIComponent(wordLower)}`;
-            const wiktionaryResponse = await fetch(wiktionaryUrl);
+        if (mymemoryResponse.ok) {
+            const mymemoryData = await mymemoryResponse.json();
             
-            if (wiktionaryResponse.ok) {
-                const wiktionaryData = await wiktionaryResponse.json();
+            if (mymemoryData.responseStatus === 200) {
+                const translation = mymemoryData.responseData.translatedText.toLowerCase();
                 
-                if (wiktionaryData.type === 'standard' && 
-                    !wiktionaryData.title.toLowerCase().includes('no existe') &&
-                    !wiktionaryData.title.toLowerCase().includes('not found')) {
-                    console.log(`✅ Wiktionary: "${word}" found`);
-                    return true;
-                }
+                const isValidTranslation = translation !== wordLower && 
+                                         translation.length > 0 &&
+                                         !translation.includes('no found') &&
+                                         !translation.includes('not found') &&
+                                         !translation.includes('error') &&
+                                         !translation.includes('invalid');
+                
+                return isValidTranslation;
             }
-            
-            console.log(`⚠️ Wiktionary: "${word}" not found, trying MyMemory...`);
-            
-        } catch (error) {
-            console.log(`❌ Wiktionary error: ${error.message}`);
         }
         
-        // OPCIÓN 2: Respaldo con MyMemory Translation
-        try {
-            const mymemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(wordLower)}&langpair=es|en`;
-            const mymemoryResponse = await fetch(mymemoryUrl);
-            
-            if (mymemoryResponse.ok) {
-                const mymemoryData = await mymemoryResponse.json();
-                
-                if (mymemoryData.responseStatus === 200) {
-                    const translation = mymemoryData.responseData.translatedText.toLowerCase();
-                    
-                    const isValidTranslation = translation !== wordLower && 
-                                             translation.length > 0 &&
-                                             !translation.includes('no found') &&
-                                             !translation.includes('not found') &&
-                                             !translation.includes('error') &&
-                                             !translation.includes('invalid');
-                    
-                    if (isValidTranslation) {
-                        console.log(`✅ MyMemory: "${word}" validated (translation: "${translation}")`);
-                        return true;
-                    } else {
-                        console.log(`❌ MyMemory: "${word}" not valid`);
-                        return false;
-                    }
-                }
-            }
-        } catch (error) {
-            console.log(`❌ MyMemory error: ${error.message}`);
-        }
+        return false;
         
-        // FALLBACK: Si ambas APIs fallan, permitir la palabra
-        console.log(`⚠️ Both APIs failed for "${word}", allowing by default`);
+    } catch (error) {
+        // Si hay error de red, permitir la palabra para no bloquear el juego
         return true;
     }
-
+}
     getCurrentGuess() {
         let guess = '';
         const wordLength = this.currentWord.length;
