@@ -1,44 +1,622 @@
 {
   "words": [
     {
+      "date": "2025-08-16",
+      "word": "VIAJAR",
+      "hint": "To feed your soul with new places ✈️",
+      "unit": 2
+    },
+    {
       "date": "2025-08-17",
-      "word": "FUEGO",
-      "hint": "Elemento natural que da luz y calor"
+      "word": "COMIDA",
+      "hint": "Fuel for your body.",
+      "unit": 2
     },
     {
       "date": "2025-08-18",
-      "word": "PIANO",
-      "hint": "Instrumento musical de teclado con cuerdas percutidas"
+      "word": "CASA",
+      "hint": "A place of comfort and refuge.",
+      "unit": 6
     },
     {
       "date": "2025-08-19",
-      "word": "PLAYA",
-      "hint": "Lugar de vacaciones con arena y mar"
+      "word": "LEER",
+      "hint": "To travel without moving your feet.",
+      "unit": 2
     },
     {
       "date": "2025-08-20",
-      "word": "MONTE",
-      "hint": "Gran elevación natural del terreno"
+      "word": "DINERO",
+      "hint": "A tool for transactions 💶",
+      "unit": 4
     },
     {
       "date": "2025-08-21",
-      "word": "LIBRO",
-      "hint": "Objeto que contiene historias o conocimiento"
+      "word": "PERRO",
+      "hint": "A loyal four-legged friend 🐶",
+      "unit": 6
     },
     {
       "date": "2025-08-22",
-      "word": "CIELO",
-      "hint": "Espacio que vemos sobre nosotros, de color azul de día"
+      "word": "NUEVO",
+      "hint": "Recently made or acquired.",
+      "unit": 4
     },
     {
       "date": "2025-08-23",
-      "word": "AGUA",
-      "hint": "Líquido transparente, inodoro e insípido esencial para la vida"
+      "word": "TIEMPO",
+      "hint": "The atmospheric mood of today ☀️",
+      "unit": 3
     },
     {
       "date": "2025-08-24",
-      "word": "PERRO",
-      "hint": "El mejor amigo del hombre"
+      "word": "COMPRAR",
+      "hint": "To exchange money for goods.",
+      "unit": 4
+    },
+    {
+      "date": "2025-08-25",
+      "word": "FOTO",
+      "hint": "A frozen moment 📷",
+      "unit": 5
+    },
+    {
+      "date": "2025-08-26",
+      "word": "BAILAR",
+      "hint": "To draw with your body in the air 💃",
+      "unit": 5
+    },
+    {
+      "date": "2025-08-27",
+      "word": "ARTE",
+      "hint": "A human expression that is not science.",
+      "unit": 1
+    },
+    {
+      "date": "2025-08-28",
+      "word": "SENTIR",
+      "hint": "To perceive an emotion.",
+      "unit": 6
+    },
+    {
+      "date": "2025-08-29",
+      "word": "NUNCA",
+      "hint": "Zero times.",
+      "unit": 6
+    },
+    {
+      "date": "2025-08-30",
+      "word": "PAÍS",
+      "hint": "A political entity with borders.",
+      "unit": 2
+    },
+    {
+      "date": "2025-08-31",
+      "word": "GUSTAR",
+      "hint": "An action that is pleasing to you.",
+      "unit": 5
+    },
+    {
+      "date": "2025-09-01",
+      "word": "HOLA",
+      "hint": "The first word you heard from us 👋",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-02",
+      "word": "ESPAÑOL",
+      "hint": "A messy and beautiful thing you learn",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-03",
+      "word": "ADIOS",
+      "hint": "The opposite of a greeting, said when leaving.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-04",
+      "word": "GRACIAS",
+      "hint": "A word to say before 'de nada'",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-05",
+      "word": "MESA",
+      "hint": "An important piece of furniture.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-06",
+      "word": "LIBRO",
+      "hint": "A paper world you can hold in your hands 📚",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-07",
+      "word": "SILLA",
+      "hint": "A support for your body in the classroom.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-08",
+      "word": "PAPEL",
+      "hint": "A thin sheet for your thoughts.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-09",
+      "word": "AMIGO",
+      "hint": "A chosen family member.",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-10",
+      "word": "HOTEL",
+      "hint": "Your temporary home in a new city.",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-11",
+      "word": "CALLE",
+      "hint": "A path between buildings.",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-12",
+      "word": "NOMBRE",
+      "hint": "The sound of your own identity.",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-13",
+      "word": "MUSEO",
+      "hint": "A silent home for beautiful things 🏛️",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-14",
+      "word": "NÚMERO",
+      "hint": "A symbol that represents a quantity.",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-15",
+      "word": "CORREO",
+      "hint": "The modern version of a paper letter 📧",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-16",
+      "word": "VENTANA",
+      "hint": "The eye of a room.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-17",
+      "word": "HABLAR",
+      "hint": "To turn thoughts into sounds.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-18",
+      "word": "LENGUA",
+      "hint": "A system of communication.",
+      "unit": 0
+    },
+    {
+      "date": "2025-09-19",
+      "word": "PROFESOR",
+      "hint": "Your guide in the journey of learning.",
+      "unit": 1
+    },
+    {
+      "date": "2025-09-20",
+      "word": "CIUDAD",
+      "hint": "A concrete jungle where people live and work.",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-21",
+      "word": "PUEBLO",
+      "hint": "A small community, not a city.",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-22",
+      "word": "MÚSICA",
+      "hint": "The art of arranging sounds in time 🎶",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-23",
+      "word": "FAMILIA",
+      "hint": "Your first team in life.",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-24",
+      "word": "PLAYA",
+      "hint": "Where the sea kisses the sand 🏖️",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-25",
+      "word": "JUGAR",
+      "hint": "To engage in an activity for enjoyment.",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-26",
+      "word": "COCINAR",
+      "hint": "A delicious form of chemistry.",
+      "unit": 2
+    },
+    {
+      "date": "2025-09-27",
+      "word": "PLAZA",
+      "hint": "The heart of a Spanish town.",
+      "unit": 3
+    },
+    {
+      "date": "2025-09-28",
+      "word": "MERCADO",
+      "hint": "A vibrant place to buy fresh ingredients.",
+      "unit": 3
+    },
+    {
+      "date": "2025-09-29",
+      "word": "IGLESIA",
+      "hint": "A building that touches the sky with its towers.",
+      "unit": 3
+    },
+    {
+      "date": "2025-09-30",
+      "word": "CENTRO",
+      "hint": "The commercial and social core of a city.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-01",
+      "word": "NORTE",
+      "hint": "The direction on a compass that is never wrong 🧭",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-02",
+      "word": "SUR",
+      "hint": "The direction of warmth for Europeans.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-03",
+      "word": "CLIMA",
+      "hint": "The long-term atmospheric mood.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-04",
+      "word": "CALOR",
+      "hint": "What makes you look for a fan in summer.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-05",
+      "word": "FRÍO",
+      "hint": "What makes you wear a jacket 🧥",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-06",
+      "word": "VIENTO",
+      "hint": "The invisible force that moves the trees.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-07",
+      "word": "NUBE",
+      "hint": "A piece of cotton in the sky ☁️",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-08",
+      "word": "LLOVER",
+      "hint": "When the sky is crying.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-09",
+      "word": "SOL",
+      "hint": "The painter of the day.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-10",
+      "word": "PIZARRA",
+      "hint": "The canvas of the classroom.",
+      "unit": 0
+    },
+    {
+      "date": "2025-10-11",
+      "word": "EDAD",
+      "hint": "A number that doesn't define you.",
+      "unit": 1
+    },
+    {
+      "date": "2025-10-12",
+      "word": "VER",
+      "hint": "To perceive with your eyes.",
+      "unit": 2
+    },
+    {
+      "date": "2025-10-13",
+      "word": "PALACIO",
+      "hint": "The home of a king or queen 👑",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-14",
+      "word": "SEÑOR",
+      "hint": "A formal way to address a man.",
+      "unit": 1
+    },
+    {
+      "date": "2025-10-15",
+      "word": "CURSO",
+      "hint": "An organized journey of learning.",
+      "unit": 2
+    },
+    {
+      "date": "2025-10-16",
+      "word": "RÍO",
+      "hint": "A serpent of water on a map.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-17",
+      "word": "DEPORTE",
+      "hint": "A healthy competition.",
+      "unit": 2
+    },
+    {
+      "date": "2025-10-18",
+      "word": "MONTAÑA",
+      "hint": "An ambition of the earth 🏔️",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-19",
+      "word": "BANDERA",
+      "hint": "A country's fabric identity 🇪🇸",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-20",
+      "word": "SALIR",
+      "hint": "The opposite of 'entrar'.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-21",
+      "word": "DECIR",
+      "hint": "To articulate a thought.",
+      "unit": 3
+    },
+    {
+      "date": "2025-10-22",
+      "word": "TIENDA",
+      "hint": "A small place for commerce.",
+      "unit": 4
+    },
+    {
+      "date": "2025-10-23",
+      "word": "ROPA",
+      "hint": "Your second skin.",
+      "unit": 4
+    },
+    {
+      "date": "2025-10-24",
+      "word": "PRECIO",
+      "hint": "Its value in numbers.",
+      "unit": 4
+    },
+    {
+      "date": "2025-10-25",
+      "word": "FALDA",
+      "hint": "A piece of clothing without legs.",
+      "unit": 4
+    },
+    {
+      "date": "2025-10-26",
+      "word": "BOLSO",
+      "hint": "A personal universe you carry 👜",
+      "unit": 4
+    },
+    {
+      "date": "2025-10-27",
+      "word": "ZAPATO",
+      "hint": "A house for your foot 👟",
+      "unit": 4
+    },
+    {
+      "date": "2025-10-28",
+      "word": "CARO",
+      "hint": "When the price is high.",
+      "unit": 4
+    },
+ {
+      "date": "2025-11-06",
+      "word": "PADRE",
+      "hint": "A male protagonist in your life story.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-07",
+      "word": "MADRE",
+      "hint": "A female protagonist in your life story.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-08",
+      "word": "HIJO",
+      "hint": "A descendant, a son or a daughter.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-09",
+      "word": "FOTO",
+      "hint": "A frozen moment 📷",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-10",
+      "word": "GUSTAR",
+      "hint": "An action that is pleasing to you.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-11",
+      "word": "PELO",
+      "hint": "A natural crown on your head.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-12",
+      "word": "OJOS",
+      "hint": "The windows to your soul.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-13",
+      "word": "BARBA",
+      "hint": "A sign of maturity on a man's face.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-14",
+      "word": "CANTAR",
+      "hint": "To use your voice as an instrument.",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-15",
+      "word": "BAILAR",
+      "hint": "To draw with your body in the air 💃",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-16",
+      "word": "AMOR",
+      "hint": "A beautiful and complex human emotion ❤️",
+      "unit": 5
+    },
+    {
+      "date": "2025-11-17",
+      "word": "JUEVES",
+      "hint": "The day that anticipates Friday.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-18",
+      "word": "HORA",
+      "hint": "A slice of the day.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-19",
+      "word": "MAÑANA",
+      "hint": "When the sun rises.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-20",
+      "word": "NOCHE",
+      "hint": "When the moon is the protagonist 🌃",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-21",
+      "word": "CAMA",
+      "hint": "Your personal charging station 😴",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-22",
+      "word": "FUMAR",
+      "hint": "A harmful habit with smoke 🚬",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-23",
+      "word": "ODIO",
+      "hint": "A powerful feeling against something or someone.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-24",
+      "word": "DOMINGO",
+      "hint": "The day of rest and sun.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-25",
+      "word": "MARTES",
+      "hint": "Named after the Roman god of war.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-26",
+      "word": "CUIDAR",
+      "hint": "To protect and assist someone.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-27",
+      "word": "SENTIR",
+      "hint": "To perceive an emotion.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-28",
+      "word": "SIEMPRE",
+      "hint": "All the times.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-29",
+      "word": "TARDE",
+      "hint": "The opposite of 'temprano'.",
+      "unit": 6
+    },
+    {
+      "date": "2025-11-30",
+      "word": "TEMPRANO",
+      "hint": "When the rooster crows.",
+      "unit": 6
+    },
+    {
+      "date": "2025-12-01",
+      "word": "SANO",
+      "hint": "In a good state of health.",
+      "unit": 6
+    },
+    {
+      "date": "2025-12-02",
+      "word": "LUNES",
+      "hint": "The first day of the working week.",
+      "unit": 6
+    },
+    {
+      "date": "2025-12-03",
+      "word": "CENA",
+      "hint": "The last meal of the day.",
+      "unit": 6
+    },
+    {
+      "date": "2025-12-04",
+      "word": "VIEJO",
+      "hint": "The opposite of new.",
+      "unit": 4
     }
   ]
 }
