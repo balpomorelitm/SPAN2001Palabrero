@@ -352,7 +352,7 @@ class WordleHKU {
         document.getElementById('total-points').textContent = (stats.totalPoints || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    updateStats(won) {
+  updateStats(won) {
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
         }
@@ -375,6 +375,150 @@ class WordleHKU {
 
         localStorage.setItem('wordleHKU-stats', JSON.stringify(stats));
         this.loadStats();
+  }
+}
+
+let currentGame = null;
+let wordsData = null;
+let currentCalendarDate = new Date();
+
+class Calendar {
+    constructor() {
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        const calendarBtn = document.getElementById('calendar-btn');
+        if (calendarBtn) {
+            calendarBtn.addEventListener('click', () => this.openCalendar());
+        }
+
+        const closeBtn = document.getElementById('calendar-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closeCalendar());
+        }
+
+        const prevBtn = document.getElementById('prev-month');
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => this.changeMonth(-1));
+        }
+
+        const nextBtn = document.getElementById('next-month');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => this.changeMonth(1));
+        }
+    }
+
+    openCalendar() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+            modal.style.display = 'block';
+            this.renderCalendar();
+        }
+    }
+
+    closeCalendar() {
+        const modal = document.getElementById('calendar-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    changeMonth(direction) {
+        currentCalendarDate.setMonth(currentCalendarDate.getMonth() + direction);
+        this.renderCalendar();
+    }
+
+    renderCalendar() {
+        const daysContainer = document.getElementById('calendar-days');
+        const header = document.getElementById('calendar-month-year');
+        if (!daysContainer || !header || !wordsData) return;
+
+        daysContainer.innerHTML = '';
+
+        const year = currentCalendarDate.getFullYear();
+        const month = currentCalendarDate.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const firstDayIndex = firstDay.getDay();
+        const currentDate = new Date(firstDay);
+        currentDate.setDate(currentDate.getDate() - firstDayIndex);
+
+        const today = new Date();
+
+        for (let i = 0; i < 42; i++) {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'calendar-day';
+
+            const dateString = this.formatDate(currentDate);
+            dayEl.textContent = currentDate.getDate();
+
+            const wordInfo = wordsData.words.find(w => w.date === dateString);
+            let status = 'unavailable';
+            if (wordInfo) {
+                if (currentDate > today) {
+                    status = 'future';
+                } else if (localStorage.getItem(`wordle-completed-${dateString}`)) {
+                    status = 'completed';
+                } else {
+                    status = 'available';
+                }
+            }
+
+            if (this.isSameDay(currentDate, today)) {
+                status = 'today';
+            }
+
+            dayEl.classList.add(status);
+
+            if (status === 'available' || status === 'today' || status === 'completed') {
+                dayEl.addEventListener('click', () => this.selectDate(dateString));
+            }
+
+            daysContainer.appendChild(dayEl);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        header.textContent = `${monthNames[month]} ${year}`;
+    }
+
+    selectDate(dateString) {
+        this.closeCalendar();
+
+        if (currentGame && currentGame.gameTimer) {
+            clearInterval(currentGame.gameTimer);
+        }
+
+        const wordInfo = wordsData.words.find(w => w.date === dateString);
+        if (!wordInfo) return;
+
+        const isArchiveMode = !this.isSameDay(new Date(dateString), new Date());
+
+        currentGame = new WordleHKU(wordInfo.word, wordInfo.hint, isArchiveMode);
+
+        const originalUpdateStats = currentGame.updateStats.bind(currentGame);
+        currentGame.updateStats = function(won) {
+            if (won) {
+                localStorage.setItem(`wordle-completed-${dateString}`, 'true');
+            }
+            originalUpdateStats(won);
+        };
+    }
+
+    formatDate(date) {
+        const y = date.getFullYear();
+        const m = (date.getMonth() + 1).toString().padStart(2, '0');
+        const d = date.getDate().toString().padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+
+    isSameDay(a, b) {
+        return a.getFullYear() === b.getFullYear() &&
+               a.getMonth() === b.getMonth() &&
+               a.getDate() === b.getDate();
     }
 }
 
@@ -384,23 +528,17 @@ async function initializeGame() {
         if (!response.ok) {
             throw new Error('Could not load words file (palabras.json).');
         }
-        const data = await response.json();
 
-        // Obtener la fecha de hoy en formato AAAA-MM-DD
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, '0');
-        const day = today.getDate().toString().padStart(2, '0');
-        const todayString = `${year}-${month}-${day}`;
+        wordsData = await response.json();
 
-        // Buscar la palabra correspondiente a la fecha de hoy
-        const wordData = data.words.find(w => w.date === todayString);
+        const calendar = new Calendar();
+        const todayString = calendar.formatDate(new Date());
+
+        const wordData = wordsData.words.find(w => w.date === todayString);
 
         if (wordData && wordData.word) {
-            // Si se encuentra la palabra para hoy, se crea una nueva instancia del juego
-            new WordleHKU(wordData.word, wordData.hint);
+            calendar.selectDate(todayString);
         } else {
-            // Mensaje si no hay palabra asignada para el día
             document.querySelector('.game-container').innerHTML = '<h1>No word scheduled for today.</h1>';
             console.error('No word found for date:', todayString);
         }
