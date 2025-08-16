@@ -489,7 +489,7 @@ class Calendar {
         currentDate.setDate(currentDate.getDate() - firstDayIndex);
 
         const today = new Date();
-        const gameStartDate = new Date(wordsData.words[0].date);
+        const gameStartDate = new Date('2025-08-15');
 
         for (let i = 0; i < 42; i++) {
             const dayElement = document.createElement('div');
