@@ -29,7 +29,6 @@ class WordleHKU {
         this.setupEventListeners();
         this.startTimer();
         
-        console.log(`Today's word: ${this.currentWord} (${wordLength} letters, ${this.maxAttempts} attempts)`);
     }
 
     startTimer() {
