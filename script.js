@@ -29,7 +29,7 @@ class WordleHKU {
         this.setupEventListeners();
         this.startTimer();
         
-        console.log(`Palabra del día: ${this.currentWord} (${wordLength} letras, ${this.maxAttempts} intentos)`);
+        console.log(`Today's word: ${this.currentWord} (${wordLength} letters, ${this.maxAttempts} attempts)`);
     }
 
     startTimer() {
@@ -101,7 +101,7 @@ class WordleHKU {
         const rows = [
             ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
             ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ñ'],
-            ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BORRAR']
+            ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'DELETE']
         ];
 
         keyboard.innerHTML = '';
@@ -115,7 +115,7 @@ class WordleHKU {
                 keyElement.textContent = key;
                 keyElement.id = `key-${key}`;
                 
-                if (key === 'ENTER' || key === 'BORRAR') {
+                if (key === 'ENTER' || key === 'DELETE') {
                     keyElement.classList.add('wide');
                 }
                 
@@ -133,7 +133,7 @@ class WordleHKU {
             if (key === 'ENTER') {
                 this.handleKeyPress('ENTER');
             } else if (key === 'BACKSPACE') {
-                this.handleKeyPress('BORRAR');
+                this.handleKeyPress('DELETE');
             } else if (/^[A-ZÑ]$/.test(key)) {
                 this.handleKeyPress(key);
             }
@@ -149,7 +149,7 @@ class WordleHKU {
 
         if (key === 'ENTER') {
             this.submitGuess();
-        } else if (key === 'BORRAR') {
+        } else if (key === 'DELETE') {
             this.deleteLetter();
         } else if (this.currentCol < this.currentWord.length) {
             this.addLetter(key);
@@ -175,91 +175,118 @@ class WordleHKU {
         }
     }
 
+    // FUNCIÓN SUBMITGUESS CORREGIDA Y COMPLETA
     async submitGuess() {
-    const wordLength = this.currentWord.length;
-    if (this.currentCol !== wordLength) {
-        this.showMessage('¡Completa la palabra!');
-        return;
-    }
-
-    const guess = this.getCurrentGuess();
-
-    // --- NUEVA SECCIÓN DE VALIDACIÓN ---
-    // Mostrar mensaje de "Verificando palabra..." mientras se valida
-    this.showMessage('Verificando palabra...', false); // false = no auto-ocultar
-    
-    const isValid = await this.isValidSpanishWord(guess);
-    
-    // Ocultar mensaje de verificación
-    document.getElementById('message').style.display = 'none';
-    
- async isValidSpanishWord(word) {
-    const wordLower = word.toLowerCase();
-    
-    // OPCIÓN 1: Intentar con Wiktionary (más confiable para diccionario)
-    try {
-        const wiktionaryUrl = `https://es.wiktionary.org/api/rest_v1/page/summary/${encodeURIComponent(wordLower)}`;
-        const wiktionaryResponse = await fetch(wiktionaryUrl);
-        
-        if (wiktionaryResponse.ok) {
-            const wiktionaryData = await wiktionaryResponse.json();
-            
-            // Si encuentra la página y es una entrada estándar
-            if (wiktionaryData.type === 'standard' && 
-                !wiktionaryData.title.toLowerCase().includes('no existe') &&
-                !wiktionaryData.title.toLowerCase().includes('not found')) {
-                console.log(`✅ Palabra "${word}" encontrada en Wiktionary`);
-                return true;
-            }
-            
-            // Si Wiktionary retorna que no existe, intentar con MyMemory
-            console.log(`⚠️ Palabra "${word}" no encontrada en Wiktionary, probando MyMemory...`);
+        const wordLength = this.currentWord.length;
+        if (this.currentCol !== wordLength) {
+            this.showMessage('Complete the word!');
+            return;
         }
-    } catch (error) {
-        console.log(`❌ Error con Wiktionary para "${word}":`, error.message);
-        console.log("🔄 Intentando con MyMemory...");
-    }
-    
-    // OPCIÓN 2: Respaldo con MyMemory Translation
-    try {
-        const mymemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(wordLower)}&langpair=es|en`;
-        const mymemoryResponse = await fetch(mymemoryUrl);
+
+        const guess = this.getCurrentGuess();
+
+        // Mostrar mensaje de verificación
+        this.showMessage('Checking word...', false);
         
-        if (mymemoryResponse.ok) {
-            const mymemoryData = await mymemoryResponse.json();
+        const isValid = await this.isValidSpanishWord(guess);
+        
+        // Ocultar mensaje de verificación
+        document.getElementById('message').style.display = 'none';
+        
+        if (!isValid) {
+            this.showMessage('Word not found in dictionary');
+            // Añadir animación de "temblor" a la fila actual
+            const currentRowElement = document.querySelector(`#game-board .word-row:nth-child(${this.currentRow + 1})`);
+            if (currentRowElement) {
+                currentRowElement.classList.add('shake');
+                setTimeout(() => {
+                    currentRowElement.classList.remove('shake');
+                }, 500);
+            }
+            return; // No cuenta como intento
+        }
+
+        // El resto de la función sigue igual
+        this.checkGuess(guess);
+        
+        if (guess === this.currentWord) {
+            this.gameOver = true;
+            this.showMessage('Congratulations! 🎉');
+            this.updateStats(true);
+        } else if (this.currentRow === this.maxAttempts - 1) {
+            this.gameOver = true;
+            this.showMessage(`The word was: ${this.currentWord}`);
+            this.updateStats(false);
+        } else {
+            this.currentRow++;
+            this.currentCol = 0;
+        }
+    }
+
+    // FUNCIÓN DE VALIDACIÓN WIKTIONARY + MYMEMORY
+    async isValidSpanishWord(word) {
+        const wordLower = word.toLowerCase();
+        
+        console.log(`🔍 Checking word: "${word}"`);
+        
+        // OPCIÓN 1: Intentar con Wiktionary
+        try {
+            const wiktionaryUrl = `https://es.wiktionary.org/api/rest_v1/page/summary/${encodeURIComponent(wordLower)}`;
+            const wiktionaryResponse = await fetch(wiktionaryUrl);
             
-            // Verificar si la respuesta es válida
-            if (mymemoryData.responseStatus === 200) {
-                const translation = mymemoryData.responseData.translatedText.toLowerCase();
+            if (wiktionaryResponse.ok) {
+                const wiktionaryData = await wiktionaryResponse.json();
                 
-                // La palabra es válida si:
-                // 1. Se tradujo a algo diferente (no es igual a la palabra original)
-                // 2. No contiene mensajes de error
-                // 3. La traducción no está vacía
-                const isValidTranslation = translation !== wordLower && 
-                                         translation.length > 0 &&
-                                         !translation.includes('no found') &&
-                                         !translation.includes('not found') &&
-                                         !translation.includes('error') &&
-                                         !translation.includes('invalid');
-                
-                if (isValidTranslation) {
-                    console.log(`✅ Palabra "${word}" validada por MyMemory (traducción: "${translation}")`);
+                if (wiktionaryData.type === 'standard' && 
+                    !wiktionaryData.title.toLowerCase().includes('no existe') &&
+                    !wiktionaryData.title.toLowerCase().includes('not found')) {
+                    console.log(`✅ Wiktionary: "${word}" found`);
                     return true;
-                } else {
-                    console.log(`❌ Palabra "${word}" no válida según MyMemory`);
-                    return false;
                 }
             }
+            
+            console.log(`⚠️ Wiktionary: "${word}" not found, trying MyMemory...`);
+            
+        } catch (error) {
+            console.log(`❌ Wiktionary error: ${error.message}`);
         }
-    } catch (error) {
-        console.log(`❌ Error con MyMemory para "${word}":`, error.message);
+        
+        // OPCIÓN 2: Respaldo con MyMemory Translation
+        try {
+            const mymemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(wordLower)}&langpair=es|en`;
+            const mymemoryResponse = await fetch(mymemoryUrl);
+            
+            if (mymemoryResponse.ok) {
+                const mymemoryData = await mymemoryResponse.json();
+                
+                if (mymemoryData.responseStatus === 200) {
+                    const translation = mymemoryData.responseData.translatedText.toLowerCase();
+                    
+                    const isValidTranslation = translation !== wordLower && 
+                                             translation.length > 0 &&
+                                             !translation.includes('no found') &&
+                                             !translation.includes('not found') &&
+                                             !translation.includes('error') &&
+                                             !translation.includes('invalid');
+                    
+                    if (isValidTranslation) {
+                        console.log(`✅ MyMemory: "${word}" validated (translation: "${translation}")`);
+                        return true;
+                    } else {
+                        console.log(`❌ MyMemory: "${word}" not valid`);
+                        return false;
+                    }
+                }
+            }
+        } catch (error) {
+            console.log(`❌ MyMemory error: ${error.message}`);
+        }
+        
+        // FALLBACK: Si ambas APIs fallan, permitir la palabra
+        console.log(`⚠️ Both APIs failed for "${word}", allowing by default`);
+        return true;
     }
-    
-    // FALLBACK: Si ambas APIs fallan, permitir la palabra para no bloquear el juego
-    console.log(`⚠️ Ambas APIs fallaron para "${word}", permitiendo por defecto`);
-    return true;
-}
+
     getCurrentGuess() {
         let guess = '';
         const wordLength = this.currentWord.length;
@@ -315,74 +342,34 @@ class WordleHKU {
             key.className = 'key absent';
         }
     }
-async isValidSpanishWord(word) {
-    const wordLower = word.toLowerCase();
-    
-    // Primero intentar con Datamuse (más rápido)
-    try {
-        const url1 = `https://api.datamuse.com/words?sp=${wordLower}&lc=es&max=1`;
-        const response1 = await fetch(url1);
-        
-        if (response1.ok) {
-            const data1 = await response1.json();
-            if (data1.length > 0 && data1[0].word.toLowerCase() === wordLower) {
-                return true;
-            }
-        }
-    } catch (error) {
-        console.log("Datamuse falló, intentando con RAE...");
-    }
-    
-    // Si falla, intentar con RAE
-    try {
-        const url2 = `https://dle.rae.es/data/search?w=${wordLower}`;
-        const response2 = await fetch(url2);
-        
-        if (response2.ok) {
-            const data2 = await response2.json();
-            return data2.res && data2.res.length > 0;
-        }
-    } catch (error) {
-        console.log("RAE también falló");
-    }
-    
-    // Si ambas fallan, intentar con la API original pero aceptar cualquier respuesta válida
-    try {
-        const url3 = `https://api.dictionaryapi.dev/api/v2/entries/es/${wordLower}`;
-        const response3 = await fetch(url3);
-        return response3.ok;
-    } catch (error) {
-        console.error("Todas las APIs fallaron:", error);
-        return true; // Fallback: aceptar la palabra
-    }
-}
+
     showHint() {
         if (this.hintUsed) return;
         
         const hintDisplay = document.getElementById('hint-display');
         const hintBtn = document.getElementById('hint-btn');
         
-        hintDisplay.textContent = `💡 Pista: ${this.currentHint}`;
+        hintDisplay.textContent = `💡 Hint: ${this.currentHint}`;
         hintDisplay.style.display = 'block';
         hintBtn.disabled = true;
-        hintBtn.textContent = 'Pista usada';
+        hintBtn.textContent = 'Hint used';
         this.hintUsed = true;
         
         this.currentPoints = Math.max(100, this.currentPoints - 100);
         this.updateScore();
     }
 
-showMessage(text, autoHide = true) {
-    const message = document.getElementById('message');
-    message.textContent = text;
-    message.style.display = 'block';
-    
-    if (autoHide) {
-        setTimeout(() => {
-            message.style.display = 'none';
-        }, 2000);
+    showMessage(text, autoHide = true) {
+        const message = document.getElementById('message');
+        message.textContent = text;
+        message.style.display = 'block';
+        
+        if (autoHide) {
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        }
     }
-}
 
     loadStats() {
         const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
@@ -429,7 +416,7 @@ async function initializeGame() {
     try {
         const response = await fetch('palabras.json');
         if (!response.ok) {
-            throw new Error('No se pudo cargar el archivo de palabras (palabras.json).');
+            throw new Error('Could not load words file (palabras.json).');
         }
         const data = await response.json();
 
@@ -448,12 +435,12 @@ async function initializeGame() {
             new WordleHKU(wordData.word, wordData.hint);
         } else {
             // Mensaje si no hay palabra asignada para el día
-            document.querySelector('.game-container').innerHTML = '<h1>No hay palabra programada para hoy.</h1>';
-            console.error('No se encontró una palabra para la fecha:', todayString);
+            document.querySelector('.game-container').innerHTML = '<h1>No word scheduled for today.</h1>';
+            console.error('No word found for date:', todayString);
         }
     } catch (error) {
-        console.error('Error al inicializar el juego:', error);
-        document.querySelector('.game-container').innerHTML = '<h1>Error al cargar el juego.</h1>';
+        console.error('Error initializing game:', error);
+        document.querySelector('.game-container').innerHTML = '<h1>Error loading game.</h1>';
     }
 }
 
