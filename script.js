@@ -1,8 +1,7 @@
 class WordleHKU {
-    // CAMBIO: El constructor ahora recibe la palabra y la pista como argumentos.
     constructor(word, hint) {
         this.currentWord = word.toUpperCase();
-        this.currentHint = hint; // Nueva propiedad para guardar la pista.
+        this.currentHint = hint;
         this.currentRow = 0;
         this.currentCol = 0;
         this.gameOver = false;
@@ -13,21 +12,25 @@ class WordleHKU {
         this.startTime = Date.now();
         this.gameTimer = null;
         this.lastMinuteDeduction = 0;
+        
+        // Determinar número de intentos según longitud
+        const wordLength = this.currentWord.length;
+        if (wordLength === 3) {
+            this.maxAttempts = 8;
+        } else if (wordLength === 4) {
+            this.maxAttempts = 7;
+        } else {
+            this.maxAttempts = 6; // 5, 6, 7, 8 letras
+        }
 
-        // CAMBIO: Las listas de palabras y categorías se han eliminado de aquí.
-
-        // El resto de la inicialización se mantiene.
         this.loadStats();
         this.createBoard();
         this.createKeyboard();
         this.setupEventListeners();
         this.startTimer();
         
-        console.log('Palabra del día:', this.currentWord); // Para testing
+        console.log(`Palabra del día: ${this.currentWord} (${wordLength} letras, ${this.maxAttempts} intentos)`);
     }
-
-    // CAMBIO: El método initGame() ya no es necesario y se ha eliminado.
-    // La palabra se determina antes de crear la instancia de la clase.
 
     startTimer() {
         this.gameTimer = setInterval(() => {
@@ -69,17 +72,28 @@ class WordleHKU {
     createBoard() {
         const board = document.getElementById('game-board');
         board.innerHTML = '';
-        for (let i = 0; i < 6; i++) {
+        
+        const wordLength = this.currentWord.length;
+        
+        // Crear filas según el número de intentos
+        for (let i = 0; i < this.maxAttempts; i++) {
             const row = document.createElement('div');
             row.className = 'word-row';
-            for (let j = 0; j < 5; j++) {
+            row.style.gridTemplateColumns = `repeat(${wordLength}, 1fr)`;
+            
+            // Crear columnas según la longitud de la palabra
+            for (let j = 0; j < wordLength; j++) {
                 const box = document.createElement('div');
                 box.className = 'letter-box';
                 box.id = `box-${i}-${j}`;
                 row.appendChild(box);
             }
+            
             board.appendChild(row);
         }
+        
+        // Actualizar CSS del grid para adaptarse
+        board.style.gridTemplateRows = `repeat(${this.maxAttempts}, 1fr)`;
     }
 
     createKeyboard() {
@@ -89,21 +103,26 @@ class WordleHKU {
             ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ñ'],
             ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BORRAR']
         ];
+
         keyboard.innerHTML = '';
         rows.forEach(row => {
             const rowElement = document.createElement('div');
             rowElement.className = 'keyboard-row';
+            
             row.forEach(key => {
                 const keyElement = document.createElement('button');
                 keyElement.className = 'key';
                 keyElement.textContent = key;
                 keyElement.id = `key-${key}`;
+                
                 if (key === 'ENTER' || key === 'BORRAR') {
                     keyElement.classList.add('wide');
                 }
+                
                 keyElement.addEventListener('click', () => this.handleKeyPress(key));
                 rowElement.appendChild(keyElement);
             });
+            
             keyboard.appendChild(rowElement);
         });
     }
@@ -119,6 +138,7 @@ class WordleHKU {
                 this.handleKeyPress(key);
             }
         });
+
         document.getElementById('hint-btn').addEventListener('click', () => {
             this.showHint();
         });
@@ -126,17 +146,19 @@ class WordleHKU {
 
     handleKeyPress(key) {
         if (this.gameOver) return;
+
         if (key === 'ENTER') {
             this.submitGuess();
         } else if (key === 'BORRAR') {
             this.deleteLetter();
-        } else if (this.currentCol < 5) {
+        } else if (this.currentCol < this.currentWord.length) {
             this.addLetter(key);
         }
     }
 
     addLetter(letter) {
-        if (this.currentCol < 5) {
+        const wordLength = this.currentWord.length;
+        if (this.currentCol < wordLength) {
             const box = document.getElementById(`box-${this.currentRow}-${this.currentCol}`);
             box.textContent = letter;
             box.classList.add('filled');
@@ -154,17 +176,20 @@ class WordleHKU {
     }
 
     submitGuess() {
-        if (this.currentCol !== 5) {
+        const wordLength = this.currentWord.length;
+        if (this.currentCol !== wordLength) {
             this.showMessage('¡Completa la palabra!');
             return;
         }
+
         const guess = this.getCurrentGuess();
         this.checkGuess(guess);
+        
         if (guess === this.currentWord) {
             this.gameOver = true;
             this.showMessage('¡Felicitaciones! 🎉');
             this.updateStats(true);
-        } else if (this.currentRow === 5) {
+        } else if (this.currentRow === this.maxAttempts - 1) {
             this.gameOver = true;
             this.showMessage(`La palabra era: ${this.currentWord}`);
             this.updateStats(false);
@@ -176,8 +201,10 @@ class WordleHKU {
 
     getCurrentGuess() {
         let guess = '';
-        for (let i = 0; i < 5; i++) {
-            guess += document.getElementById(`box-${this.currentRow}-${i}`).textContent;
+        const wordLength = this.currentWord.length;
+        for (let i = 0; i < wordLength; i++) {
+            const box = document.getElementById(`box-${this.currentRow}-${i}`);
+            guess += box.textContent;
         }
         return guess;
     }
@@ -185,22 +212,30 @@ class WordleHKU {
     checkGuess(guess) {
         const wordArray = this.currentWord.split('');
         const guessArray = guess.split('');
-        const result = new Array(5).fill('absent');
-        for (let i = 0; i < 5; i++) {
+        const wordLength = this.currentWord.length;
+        const result = new Array(wordLength).fill('absent');
+
+        // Primera pasada: letras correctas
+        for (let i = 0; i < wordLength; i++) {
             if (guessArray[i] === wordArray[i]) {
                 result[i] = 'correct';
                 wordArray[i] = null;
             }
         }
-        for (let i = 0; i < 5; i++) {
+
+        // Segunda pasada: letras presentes pero en posición incorrecta
+        for (let i = 0; i < wordLength; i++) {
             if (result[i] !== 'correct' && wordArray.includes(guessArray[i])) {
                 result[i] = 'present';
                 wordArray[wordArray.indexOf(guessArray[i])] = null;
             }
         }
-        for (let i = 0; i < 5; i++) {
+
+        // Aplicar estilos
+        for (let i = 0; i < wordLength; i++) {
             const box = document.getElementById(`box-${this.currentRow}-${i}`);
             const key = document.getElementById(`key-${guessArray[i]}`);
+            
             setTimeout(() => {
                 box.classList.add(result[i]);
                 this.updateKeyboardKey(key, result[i]);
@@ -210,6 +245,7 @@ class WordleHKU {
 
     updateKeyboardKey(key, status) {
         if (!key) return;
+        
         if (status === 'correct') {
             key.className = 'key correct';
         } else if (status === 'present' && !key.classList.contains('correct')) {
@@ -221,14 +257,16 @@ class WordleHKU {
 
     showHint() {
         if (this.hintUsed) return;
+        
         const hintDisplay = document.getElementById('hint-display');
         const hintBtn = document.getElementById('hint-btn');
-        // CAMBIO: Usa la propiedad this.currentHint directamente.
+        
         hintDisplay.textContent = `💡 Pista: ${this.currentHint}`;
         hintDisplay.style.display = 'block';
         hintBtn.disabled = true;
         hintBtn.textContent = 'Pista usada';
         this.hintUsed = true;
+        
         this.currentPoints = Math.max(100, this.currentPoints - 100);
         this.updateScore();
     }
@@ -237,6 +275,7 @@ class WordleHKU {
         const message = document.getElementById('message');
         message.textContent = text;
         message.style.display = 'block';
+        
         setTimeout(() => {
             message.style.display = 'none';
         }, 2000);
@@ -249,6 +288,7 @@ class WordleHKU {
             currentStreak: 0,
             totalPoints: 0
         };
+
         document.getElementById('games-played').textContent = stats.gamesPlayed;
         document.getElementById('win-percentage').textContent = 
             stats.gamesPlayed > 0 ? Math.round((stats.gamesWon / stats.gamesPlayed) * 100) + '%' : '0%';
@@ -260,58 +300,3 @@ class WordleHKU {
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
         }
-        const stats = JSON.parse(localStorage.getItem('wordleHKU-stats')) || {
-            gamesPlayed: 0,
-            gamesWon: 0,
-            currentStreak: 0,
-            totalPoints: 0
-        };
-        stats.gamesPlayed++;
-        if (won) {
-            stats.gamesWon++;
-            stats.currentStreak++;
-            stats.totalPoints += this.currentPoints;
-        } else {
-            stats.currentStreak = 0;
-        }
-        localStorage.setItem('wordleHKU-stats', JSON.stringify(stats));
-        this.loadStats();
-    }
-}
-
-async function initializeGame() {
-    try {
-        const response = await fetch('palabras.json');
-        if (!response.ok) {
-            throw new Error('No se pudo cargar el archivo de palabras (palabras.json).');
-        }
-        const data = await response.json();
-
-        // Obtener la fecha de hoy en formato AAAA-MM-DD
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, '0');
-        const day = today.getDate().toString().padStart(2, '0');
-        const todayString = `${year}-${month}-${day}`;
-
-        // Buscar la palabra correspondiente a la fecha de hoy
-        const wordData = data.words.find(w => w.date === todayString);
-
-        if (wordData && wordData.word) {
-            // Si se encuentra la palabra para hoy, se crea una nueva instancia del juego
-            new WordleHKU(wordData.word, wordData.hint);
-        } else {
-            // Mensaje si no hay palabra asignada para el día
-            document.querySelector('.game-container').innerHTML = '<h1>No hay palabra programada para hoy.</h1>';
-            console.error('No se encontró una palabra para la fecha:', todayString);
-        }
-    } catch (error) {
-        console.error('Error al inicializar el juego:', error);
-        document.querySelector('.game-container').innerHTML = '<h1>Error al cargar el juego.</h1>';
-    }
-}
-
-// CAMBIO: El listener ahora llama a la nueva función de inicialización.
-document.addEventListener('DOMContentLoaded', () => {
-    initializeGame();
-});
