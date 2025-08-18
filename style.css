@@ -257,6 +257,7 @@ body {
     transition: all 0.3s ease;
     font-size: 14px;
     border: 2px solid #3B1F00;
+    position: relative; /* Para el tooltip */
 }
 
 .hint-button:hover {
@@ -586,4 +587,48 @@ body {
     .calendar-header h3 {
         font-size: 1.1em;
     }
+}
+
+/* Tooltip warning */
+.hint-button::before {
+    content: attr(title);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3B1F00;
+    color: #FFED4E;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: 2px solid #DC6900;
+}
+
+.hint-button::after {
+    content: '';
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #3B1F00;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.hint-button:hover::before,
+.hint-button:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hint-button:disabled::before,
+.hint-button:disabled::after {
+    display: none;
 }

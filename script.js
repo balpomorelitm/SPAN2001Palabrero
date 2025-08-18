@@ -340,20 +340,33 @@ class WordleHKU {
 
     showHint() {
         if (this.hintUsed) return;
-        
+
+        // Mostrar confirmación antes de dar la pista
+        const confirmHint = confirm("⚠️ WARNING: Using this hint will HALVE your final points!\n\nAre you sure you want to continue?");
+
+        if (!confirmHint) {
+            return; // El usuario canceló
+        }
+
         const hintDisplay = document.getElementById('hint-display');
         const hintBtn = document.getElementById('hint-btn');
-        
+
         hintDisplay.textContent = `💡 Hint: ${this.currentHint}`;
         hintDisplay.style.display = 'block';
         hintBtn.disabled = true;
-        hintBtn.textContent = 'Hint used';
+        hintBtn.textContent = 'Hint used (-50% points)';
         this.hintUsed = true;
+
         // Solo deducir puntos si no es modo archivo y no se completó previamente
         if (!this.isArchiveMode && !this.alreadyCompleted) {
             this.currentPoints = Math.max(100, this.currentPoints - 100);
             this.updateScore();
         }
+
+        // Mostrar advertencia de puntos reducidos
+        setTimeout(() => {
+            this.showMessage("Final points will be halved!", true);
+        }, 1000);
     }
 
     showMessage(text, autoHide = true) {
@@ -410,7 +423,18 @@ class WordleHKU {
         if (won) {
             stats.gamesWon++;
             stats.currentStreak++;
-            stats.totalPoints += this.currentPoints;
+
+            // Si usó pista, reducir puntos a la mitad
+            const finalPoints = this.hintUsed ? Math.floor(this.currentPoints / 2) : this.currentPoints;
+            stats.totalPoints += finalPoints;
+
+            // Mostrar mensaje de puntos reducidos si usó pista
+            if (this.hintUsed) {
+                setTimeout(() => {
+                    this.showMessage(`Points halved for using hint: ${finalPoints} points added`);
+                }, 2000);
+            }
+
             // Marcar como completado
             localStorage.setItem(`wordle-completed-${this.dateString}`, 'true');
             this.alreadyCompleted = true;
@@ -551,6 +575,20 @@ renderCalendar() {
             }
 
             currentGame = new WordleHKU(wordData.word, wordData.hint, !isToday, dateString);
+
+            // REINICIAR INTERFAZ DE PISTA
+            const hintDisplay = document.getElementById('hint-display');
+            const hintBtn = document.getElementById('hint-btn');
+
+            if (hintDisplay) {
+                hintDisplay.style.display = 'none';
+                hintDisplay.textContent = '';
+            }
+
+            if (hintBtn) {
+                hintBtn.disabled = false;
+                hintBtn.textContent = '💡 Obtener Pista';
+            }
         }
     }
 
