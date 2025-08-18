@@ -341,13 +341,6 @@ class WordleHKU {
     showHint() {
         if (this.hintUsed) return;
 
-        // Mostrar confirmación antes de dar la pista
-        const confirmHint = confirm("⚠️ WARNING: Using this hint will HALVE your final points!\n\nAre you sure you want to continue?");
-
-        if (!confirmHint) {
-            return; // El usuario canceló
-        }
-
         const hintDisplay = document.getElementById('hint-display');
         const hintBtn = document.getElementById('hint-btn');
 
