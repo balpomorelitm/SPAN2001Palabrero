@@ -1,628 +1,483 @@
-{
-  "words": [
-     {
-      "date": "2025-08-15",
-      "word": "primo",
-      "hint": "a family member, a number",
-      "unit": 5
-    },
-    {
-      "date": "2025-08-16",
-      "word": "VIAJAR",
-      "hint": "To feed your soul with new places ✈️",
-      "unit": 2
-    },
-    {
-      "date": "2025-08-17",
-      "word": "COMIDA",
-      "hint": "Fuel for your body.",
-      "unit": 2
-    },
-    {
-      "date": "2025-08-18",
-      "word": "CASA",
-      "hint": "A place of comfort and refuge.",
-      "unit": 6
-    },
-    {
-      "date": "2025-08-19",
-      "word": "LEER",
-      "hint": "To travel without moving your feet.",
-      "unit": 2
-    },
-    {
-      "date": "2025-08-20",
-      "word": "DINERO",
-      "hint": "A tool for transactions 💶",
-      "unit": 4
-    },
-    {
-      "date": "2025-08-21",
-      "word": "PERRO",
-      "hint": "A loyal four-legged friend 🐶",
-      "unit": 6
-    },
-    {
-      "date": "2025-08-22",
-      "word": "NUEVO",
-      "hint": "Recently made or acquired.",
-      "unit": 4
-    },
-    {
-      "date": "2025-08-23",
-      "word": "TIEMPO",
-      "hint": "The atmospheric mood of today ☀️",
-      "unit": 3
-    },
-    {
-      "date": "2025-08-24",
-      "word": "COMPRAR",
-      "hint": "To exchange money for goods.",
-      "unit": 4
-    },
-    {
-      "date": "2025-08-25",
-      "word": "FOTO",
-      "hint": "A frozen moment 📷",
-      "unit": 5
-    },
-    {
-      "date": "2025-08-26",
-      "word": "BAILAR",
-      "hint": "To draw with your body in the air 💃",
-      "unit": 5
-    },
-    {
-      "date": "2025-08-27",
-      "word": "ARTE",
-      "hint": "A human expression that is not science.",
-      "unit": 1
-    },
-    {
-      "date": "2025-08-28",
-      "word": "SENTIR",
-      "hint": "To perceive an emotion.",
-      "unit": 6
-    },
-    {
-      "date": "2025-08-29",
-      "word": "NUNCA",
-      "hint": "Zero times.",
-      "unit": 6
-    },
-    {
-      "date": "2025-08-30",
-      "word": "PAÍS",
-      "hint": "A political entity with borders.",
-      "unit": 2
-    },
-    {
-      "date": "2025-08-31",
-      "word": "GUSTAR",
-      "hint": "An action that is pleasing to you.",
-      "unit": 5
-    },
-    {
-      "date": "2025-09-01",
-      "word": "HOLA",
-      "hint": "The first word you heard from us 👋",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-02",
-      "word": "ESPAÑOL",
-      "hint": "A messy and beautiful thing you learn",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-03",
-      "word": "ADIOS",
-      "hint": "The opposite of a greeting, said when leaving.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-04",
-      "word": "GRACIAS",
-      "hint": "A word to say before 'de nada'",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-05",
-      "word": "MESA",
-      "hint": "An important piece of furniture.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-06",
-      "word": "LIBRO",
-      "hint": "A paper world you can hold in your hands 📚",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-07",
-      "word": "SILLA",
-      "hint": "A support for your body in the classroom.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-08",
-      "word": "PAPEL",
-      "hint": "A thin sheet for your thoughts.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-09",
-      "word": "AMIGO",
-      "hint": "A chosen family member.",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-10",
-      "word": "HOTEL",
-      "hint": "Your temporary home in a new city.",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-11",
-      "word": "CALLE",
-      "hint": "A path between buildings.",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-12",
-      "word": "NOMBRE",
-      "hint": "The sound of your own identity.",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-13",
-      "word": "MUSEO",
-      "hint": "A silent home for beautiful things 🏛️",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-14",
-      "word": "NÚMERO",
-      "hint": "A symbol that represents a quantity.",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-15",
-      "word": "CORREO",
-      "hint": "The modern version of a paper letter 📧",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-16",
-      "word": "VENTANA",
-      "hint": "The eye of a room.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-17",
-      "word": "HABLAR",
-      "hint": "To turn thoughts into sounds.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-18",
-      "word": "LENGUA",
-      "hint": "A system of communication.",
-      "unit": 0
-    },
-    {
-      "date": "2025-09-19",
-      "word": "PROFESOR",
-      "hint": "Your guide in the journey of learning.",
-      "unit": 1
-    },
-    {
-      "date": "2025-09-20",
-      "word": "CIUDAD",
-      "hint": "A concrete jungle where people live and work.",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-21",
-      "word": "PUEBLO",
-      "hint": "A small community, not a city.",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-22",
-      "word": "MÚSICA",
-      "hint": "The art of arranging sounds in time 🎶",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-23",
-      "word": "FAMILIA",
-      "hint": "Your first team in life.",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-24",
-      "word": "PLAYA",
-      "hint": "Where the sea kisses the sand 🏖️",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-25",
-      "word": "JUGAR",
-      "hint": "To engage in an activity for enjoyment.",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-26",
-      "word": "COCINAR",
-      "hint": "A delicious form of chemistry.",
-      "unit": 2
-    },
-    {
-      "date": "2025-09-27",
-      "word": "PLAZA",
-      "hint": "The heart of a Spanish town.",
-      "unit": 3
-    },
-    {
-      "date": "2025-09-28",
-      "word": "MERCADO",
-      "hint": "A vibrant place to buy fresh ingredients.",
-      "unit": 3
-    },
-    {
-      "date": "2025-09-29",
-      "word": "IGLESIA",
-      "hint": "A building that touches the sky with its towers.",
-      "unit": 3
-    },
-    {
-      "date": "2025-09-30",
-      "word": "CENTRO",
-      "hint": "The commercial and social core of a city.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-01",
-      "word": "NORTE",
-      "hint": "The direction on a compass that is never wrong 🧭",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-02",
-      "word": "SUR",
-      "hint": "The direction of warmth for Europeans.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-03",
-      "word": "CLIMA",
-      "hint": "The long-term atmospheric mood.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-04",
-      "word": "CALOR",
-      "hint": "What makes you look for a fan in summer.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-05",
-      "word": "FRÍO",
-      "hint": "What makes you wear a jacket 🧥",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-06",
-      "word": "VIENTO",
-      "hint": "The invisible force that moves the trees.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-07",
-      "word": "NUBE",
-      "hint": "A piece of cotton in the sky ☁️",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-08",
-      "word": "LLOVER",
-      "hint": "When the sky is crying.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-09",
-      "word": "SOL",
-      "hint": "The painter of the day.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-10",
-      "word": "PIZARRA",
-      "hint": "The canvas of the classroom.",
-      "unit": 0
-    },
-    {
-      "date": "2025-10-11",
-      "word": "EDAD",
-      "hint": "A number that doesn't define you.",
-      "unit": 1
-    },
-    {
-      "date": "2025-10-12",
-      "word": "VER",
-      "hint": "To perceive with your eyes.",
-      "unit": 2
-    },
-    {
-      "date": "2025-10-13",
-      "word": "PALACIO",
-      "hint": "The home of a king or queen 👑",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-14",
-      "word": "SEÑOR",
-      "hint": "A formal way to address a man.",
-      "unit": 1
-    },
-    {
-      "date": "2025-10-15",
-      "word": "CURSO",
-      "hint": "An organized journey of learning.",
-      "unit": 2
-    },
-    {
-      "date": "2025-10-16",
-      "word": "RÍO",
-      "hint": "A serpent of water on a map.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-17",
-      "word": "DEPORTE",
-      "hint": "A healthy competition.",
-      "unit": 2
-    },
-    {
-      "date": "2025-10-18",
-      "word": "MONTAÑA",
-      "hint": "An ambition of the earth 🏔️",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-19",
-      "word": "BANDERA",
-      "hint": "A country's fabric identity 🇪🇸",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-20",
-      "word": "SALIR",
-      "hint": "The opposite of 'entrar'.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-21",
-      "word": "DECIR",
-      "hint": "To articulate a thought.",
-      "unit": 3
-    },
-    {
-      "date": "2025-10-22",
-      "word": "TIENDA",
-      "hint": "A small place for commerce.",
-      "unit": 4
-    },
-    {
-      "date": "2025-10-23",
-      "word": "ROPA",
-      "hint": "Your second skin.",
-      "unit": 4
-    },
-    {
-      "date": "2025-10-24",
-      "word": "PRECIO",
-      "hint": "Its value in numbers.",
-      "unit": 4
-    },
-    {
-      "date": "2025-10-25",
-      "word": "FALDA",
-      "hint": "A piece of clothing without legs.",
-      "unit": 4
-    },
-    {
-      "date": "2025-10-26",
-      "word": "BOLSO",
-      "hint": "A personal universe you carry 👜",
-      "unit": 4
-    },
-    {
-      "date": "2025-10-27",
-      "word": "ZAPATO",
-      "hint": "A house for your foot 👟",
-      "unit": 4
-    },
-    {
-      "date": "2025-10-28",
-      "word": "CARO",
-      "hint": "When the price is high.",
-      "unit": 4
-    },
- {
-      "date": "2025-11-06",
-      "word": "PADRE",
-      "hint": "A male protagonist in your life story.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-07",
-      "word": "MADRE",
-      "hint": "A female protagonist in your life story.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-08",
-      "word": "HIJO",
-      "hint": "A descendant, a son or a daughter.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-09",
-      "word": "FOTO",
-      "hint": "A frozen moment 📷",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-10",
-      "word": "GUSTAR",
-      "hint": "An action that is pleasing to you.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-11",
-      "word": "PELO",
-      "hint": "A natural crown on your head.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-12",
-      "word": "OJOS",
-      "hint": "The windows to your soul.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-13",
-      "word": "BARBA",
-      "hint": "A sign of maturity on a man's face.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-14",
-      "word": "CANTAR",
-      "hint": "To use your voice as an instrument.",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-15",
-      "word": "BAILAR",
-      "hint": "To draw with your body in the air 💃",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-16",
-      "word": "AMOR",
-      "hint": "A beautiful and complex human emotion ❤️",
-      "unit": 5
-    },
-    {
-      "date": "2025-11-17",
-      "word": "JUEVES",
-      "hint": "The day that anticipates Friday.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-18",
-      "word": "HORA",
-      "hint": "A slice of the day.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-19",
-      "word": "MAÑANA",
-      "hint": "When the sun rises.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-20",
-      "word": "NOCHE",
-      "hint": "When the moon is the protagonist 🌃",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-21",
-      "word": "CAMA",
-      "hint": "Your personal charging station 😴",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-22",
-      "word": "FUMAR",
-      "hint": "A harmful habit with smoke 🚬",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-23",
-      "word": "ODIO",
-      "hint": "A powerful feeling against something or someone.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-24",
-      "word": "DOMINGO",
-      "hint": "The day of rest and sun.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-25",
-      "word": "MARTES",
-      "hint": "Named after the Roman god of war.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-26",
-      "word": "CUIDAR",
-      "hint": "To protect and assist someone.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-27",
-      "word": "SENTIR",
-      "hint": "To perceive an emotion.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-28",
-      "word": "SIEMPRE",
-      "hint": "All the times.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-29",
-      "word": "TARDE",
-      "hint": "The opposite of 'temprano'.",
-      "unit": 6
-    },
-    {
-      "date": "2025-11-30",
-      "word": "TEMPRANO",
-      "hint": "When the rooster crows.",
-      "unit": 6
-    },
-    {
-      "date": "2025-12-01",
-      "word": "SANO",
-      "hint": "In a good state of health.",
-      "unit": 6
-    },
-    {
-      "date": "2025-12-02",
-      "word": "LUNES",
-      "hint": "The first day of the working week.",
-      "unit": 6
-    },
-    {
-      "date": "2025-12-03",
-      "word": "CENA",
-      "hint": "The last meal of the day.",
-      "unit": 6
-    },
-    {
-      "date": "2025-12-04",
-      "word": "VIEJO",
-      "hint": "The opposite of new.",
-      "unit": 4
-    }
-  ]
-}
+[
+  {
+    "palabra": "PEDIR",
+    "pista": "La acción que haces en un restaurante antes de comer.",
+    "fecha": "2025-09-01"
+  },
+  {
+    "palabra": "AYUDAR",
+    "pista": "Es ofrecer tu mano a alguien que lo necesita.",
+    "fecha": "2025-09-02"
+  },
+  {
+    "palabra": "PRESTAR",
+    "pista": "Te doy algo mío, pero tienes que devolverlo.",
+    "fecha": "2025-09-03"
+  },
+  {
+    "palabra": "AGRADECER",
+    "pista": "Es el arte de reconocer un favor con palabras.",
+    "fecha": "2025-09-04"
+  },
+  {
+    "palabra": "SALUDO",
+    "pista": "Un 'hola' 👋 o un apretón de manos 🤝 lo son.",
+    "fecha": "2025-09-05"
+  },
+  {
+    "palabra": "DESPEDIRSE",
+    "pista": "Un 'adiós' es la forma más común de hacerlo.",
+    "fecha": "2025-09-06"
+  },
+  {
+    "palabra": "PERDÓN",
+    "pista": "Una palabra que cura pequeñas heridas.",
+    "fecha": "2025-09-07"
+  },
+  {
+    "palabra": "TUTEAR",
+    "pista": "Cuando la formalidad desaparece y llamas a alguien de 'tú'.",
+    "fecha": "2025-09-08"
+  },
+  {
+    "palabra": "LEYENDO",
+    "pista": "Viajo por mundos de papel sin moverme del sillón. 📖 ¿Qué estoy haciendo?",
+    "fecha": "2025-09-09"
+  },
+  {
+    "palabra": "QUEDAR",
+    "pista": "Ponerse de acuerdo para verse en un lugar y a una hora.",
+    "fecha": "2025-09-10"
+  },
+  {
+    "palabra": "CUIDADO",
+    "pista": "Se grita para avisar de un peligro inminente. ⚠️",
+    "fecha": "2025-09-11"
+  },
+  {
+    "palabra": "OCIO",
+    "pista": "Tiempo libre para hacer lo que más te gusta.",
+    "fecha": "2025-09-12"
+  },
+  {
+    "palabra": "DISFRUTAR",
+    "pista": "Sentir alegría y placer en un buen momento.",
+    "fecha": "2025-09-13"
+  },
+  {
+    "palabra": "ESPECTACULAR",
+    "pista": "Algo tan increíble que te deja sin palabras.",
+    "fecha": "2025-09-14"
+  },
+  {
+    "palabra": "ENTRADA",
+    "pista": "Sin este papelito 🎟️, no puedes ver a tu banda favorita.",
+    "fecha": "2025-09-15"
+  },
+  {
+    "palabra": "EXPOSICIÓN",
+    "pista": "Un lugar donde los cuadros y esculturas se muestran al mundo.",
+    "fecha": "2025-09-16"
+  },
+  {
+    "palabra": "RICO",
+    "pista": "Lo que dices cuando la comida te sabe a gloria. 😋",
+    "fecha": "2025-09-17"
+  },
+  {
+    "palabra": "LENTO",
+    "pista": "Como camina una tortuga. 🐢",
+    "fecha": "2025-09-18"
+  },
+  {
+    "palabra": "AMBIENTE",
+    "pista": "La energía o la atmósfera que se respira en un lugar.",
+    "fecha": "2025-09-19"
+  },
+  {
+    "palabra": "ÚNICO",
+    "pista": "No hay dos como él.",
+    "fecha": "2025-09-20"
+  },
+  {
+    "palabra": "MARAVILLA",
+    "pista": "La Alhambra o las pirámides de Egipto 🏛️ lo son.",
+    "fecha": "2025-09-21"
+  },
+  {
+    "palabra": "CHULO",
+    "pista": "Una forma coloquial de decir que algo es genial en España.",
+    "fecha": "2025-09-22"
+  },
+  {
+    "palabra": "DESAYUNAR",
+    "pista": "Romper el ayuno.",
+    "fecha": "2025-09-23"
+  },
+  {
+    "palabra": "CEREALES",
+    "pista": "Copos de maíz o avena que nadan en leche. 🥣",
+    "fecha": "2025-09-24"
+  },
+  {
+    "palabra": "VERDURA",
+    "pista": "Soy verde y saludable, crezco en la huerta. 🥦",
+    "fecha": "2025-09-25"
+  },
+  {
+    "palabra": "CARNE",
+    "pista": "Proteína que antes caminaba o corría.",
+    "fecha": "2025-09-26"
+  },
+  {
+    "palabra": "PESCADO",
+    "pista": "Proteína que antes nadaba en el mar. 🐟",
+    "fecha": "2025-09-27"
+  },
+  {
+    "palabra": "LÁCTEO",
+    "pista": "Leche, queso o yogur, todos vienen de la misma fuente.",
+    "fecha": "2025-09-28"
+  },
+  {
+    "palabra": "HUEVO",
+    "pista": "Antes de ser tortilla, fui ovalado y frágil. 🥚",
+    "fecha": "2025-09-29"
+  },
+  {
+    "palabra": "ARROZ",
+    "pista": "Pequeño grano blanco, esencial en la paella.",
+    "fecha": "2025-09-30"
+  },
+  {
+    "palabra": "PASTA",
+    "pista": "Espaguetis, macarrones, lazos... todos somos familia. 🍝",
+    "fecha": "2025-10-01"
+  },
+  {
+    "palabra": "PATATA",
+    "pista": "Crezo bajo tierra y me convierten en tortilla o patatas fritas.",
+    "fecha": "2025-10-02"
+  },
+  {
+    "palabra": "TOMATE",
+    "pista": "Rojo por fuera, jugoso por dentro, ¿fruta o verdura en tu ensalada?",
+    "fecha": "2025-10-03"
+  },
+  {
+    "palabra": "CEBOLLA",
+    "pista": "Al cortarme, te hago llorar sin sentir pena. 🧅",
+    "fecha": "2025-10-04"
+  },
+  {
+    "palabra": "AJOS",
+    "pista": "Pequeños y blancos, espanto a los vampiros 🧛 y doy sabor a tus guisos.",
+    "fecha": "2025-10-05"
+  },
+  {
+    "palabra": "ACEITE",
+    "pista": "Oro líquido de la aceituna.",
+    "fecha": "2025-10-06"
+  },
+  {
+    "palabra": "VINAGRE",
+    "pista": "El toque ácido para tus comidas.",
+    "fecha": "2025-10-07"
+  },
+  {
+    "palabra": "QUINOA",
+    "pista": "Un granito de los andes.",
+    "fecha": "2025-10-08"
+  },
+  {
+    "palabra": "AZÚCAR",
+    "pista": "Puedo endulzar la vida.",
+    "fecha": "2025-10-09"
+  },
+  {
+    "palabra": "COCINAR",
+    "pista": "El arte de transformar alimentos con calor.",
+    "fecha": "2025-10-10"
+  },
+  {
+    "palabra": "HERVIR",
+    "pista": "Cocinar con agua que baila con burbujas.",
+    "fecha": "2025-10-11"
+  },
+  {
+    "palabra": "FREÍR",
+    "pista": "Dorar algo en aceite.",
+    "fecha": "2025-10-12"
+  },
+  {
+    "palabra": "APRENDER",
+    "pista": "Recibir conocimientos nuevos.",
+    "fecha": "2025-10-13"
+  },
+  {
+    "palabra": "CONOCER",
+    "pista": "El primer paso para hacer un nuevo amigo.",
+    "fecha": "2025-10-14"
+  },
+  {
+    "palabra": "VIAJAR",
+    "pista": "Ir de un lugar a otro. ✈️",
+    "fecha": "2025-10-15"
+  },
+  {
+    "palabra": "ALEGRE",
+    "pista": "Cuando una sonrisa no se te quita de la cara lo estás.",
+    "fecha": "2025-10-16"
+  },
+  {
+    "palabra": "COMPRAR",
+    "pista": "Fundamental en el capitalismo.",
+    "fecha": "2025-10-17"
+  },
+  {
+    "palabra": "CORTESÍA",
+    "pista": "Decir 'por favor' y 'gracias' es parte de ella.",
+    "fecha": "2025-10-18"
+  },
+  {
+    "palabra": "FESTIVAL",
+    "pista": "Quieres ir a ver todas tus bandas favoritas a uno. 🎸",
+    "fecha": "2025-10-19"
+  },
+  {
+    "palabra": "VEGETARIANO",
+    "pista": "Alérgico a la carne, más o menos.",
+    "fecha": "2025-10-20"
+  },
+  {
+    "palabra": "CUERPO",
+    "pista": "Tu casa física.",
+    "fecha": "2025-10-21"
+  },
+  {
+    "palabra": "CABEZA",
+    "pista": "Contengo tus ideas y llevo un sombrero.",
+    "fecha": "2025-10-22"
+  },
+  {
+    "palabra": "BRAZO",
+    "pista": "Conmigo abrazas y saludas.",
+    "fecha": "2025-10-23"
+  },
+  {
+    "palabra": "PIERNA",
+    "pista": "Te llevo a todas partes.",
+    "fecha": "2025-10-24"
+  },
+  {
+    "palabra": "MANO",
+    "pista": "Te ayudo a escribir y a tocar.",
+    "fecha": "2025-10-25"
+  },
+  {
+    "palabra": "PIE",
+    "pista": "Siempre en contacto con el suelo.",
+    "fecha": "2025-10-26"
+  },
+  {
+    "palabra": "MAREADO",
+    "pista": "Es como el efecto del MAR en tu cabeza",
+    "fecha": "2025-10-27"
+  },
+  {
+    "palabra": "ENFERMO",
+    "pista": "Cuando estás así no deberías salir.",
+    "fecha": "2025-10-28"
+  },
+  {
+    "palabra": "MÉDICO",
+    "pista": "Ha estudiado mucho y te puede ayudar con tus problemas.",
+    "fecha": "2025-10-29"
+  },
+  {
+    "palabra": "HOSPITAL",
+    "pista": "A este lugar vas cuando te sientes mal, y sales mejor. 🏥",
+    "fecha": "2025-10-30"
+  },
+  {
+    "palabra": "MEDICINA",
+    "pista": "Soy amarga o dulce, pero mi objetivo es siempre curar.",
+    "fecha": "2025-10-31"
+  },
+  {
+    "palabra": "DOLOR",
+    "pista": "Un mensajero del cuerpo que avisa que algo no va bien.",
+    "fecha": "2025-11-01"
+  },
+  {
+    "palabra": "FIEBRE",
+    "pista": "Cuando tu cuerpo sube la calefacción para luchar. 🔥",
+    "fecha": "2025-11-02"
+  },
+  {
+    "palabra": "SALUD",
+    "pista": "El mayor tesoro, que no se compra ni se vende.",
+    "fecha": "2025-11-03"
+  },
+  {
+    "palabra": "ANTES",
+    "pista": "Soy el hermano mayor del ahora y el abuelo del mañana.",
+    "fecha": "2025-11-04"
+  },
+  {
+    "palabra": "HISTORIA",
+    "pista": "Soy la memoria colectiva, escrita en libros y contada por los abuelos.",
+    "fecha": "2025-11-05"
+  },
+  {
+    "palabra": "VIVÍA",
+    "pista": "En el cuento, el rey ___ en un castillo.",
+    "fecha": "2025-11-06"
+  },
+  {
+    "palabra": "AHORA",
+    "pista": "Soy un regalo, por eso me llaman presente.",
+    "fecha": "2025-11-07"
+  },
+  {
+    "palabra": "CAMBIAR",
+    "pista": "Lo que hace una oruga para ser mariposa. 🐛🦋",
+    "fecha": "2025-11-08"
+  },
+  {
+    "palabra": "FUTURO",
+    "pista": "Un libro con las páginas en blanco, esperando ser escrito.",
+    "fecha": "2025-11-09"
+  },
+  {
+    "palabra": "ÉPOCA",
+    "pista": "Los dinosaurios tuvieron la suya, y nosotros tenemos la nuestra.",
+    "fecha": "2025-11-10"
+  },
+  {
+    "palabra": "PASADO",
+    "pista": "Soy un espejo que mira hacia atrás.",
+    "fecha": "2025-11-11"
+  },
+  {
+    "palabra": "SIGLO",
+    "pista": "El abuelo de la década.",
+    "fecha": "2025-11-12"
+  },
+  {
+    "palabra": "ANTIGUO",
+    "pista": "Como las pirámides o los castillos medievales.",
+    "fecha": "2025-11-13"
+  },
+  {
+    "palabra": "RECORDAR",
+    "pista": "El acto de viajar al pasado sin moverse del sitio.",
+    "fecha": "2025-11-14"
+  },
+  {
+    "palabra": "OLVIDAR",
+    "pista": "El contrario de guardar algo en la memoria.",
+    "fecha": "2025-11-15"
+  },
+  {
+    "palabra": "MOMENTO",
+    "pista": "Soy corto, pero puedo durar para siempre en la memoria.",
+    "fecha": "2025-11-16"
+  },
+  {
+    "palabra": "EXPERIENCIA",
+    "pista": "La cicatriz que te deja una lección.",
+    "fecha": "2025-11-17"
+  },
+  {
+    "palabra": "SOLDADO",
+    "pista": "Este trabajo y trabajador te puede matar.",
+    "fecha": "2025-11-18"
+  },
+  {
+    "palabra": "LLORAR",
+    "pista": "La lluvia de los ojos, a veces de pena, a veces de alegría. 😭😂",
+    "fecha": "2025-11-19"
+  },
+  {
+    "palabra": "REÍR",
+    "pista": "La música del alma cuando está feliz. 😄",
+    "fecha": "2025-11-20"
+  },
+  {
+    "palabra": "SORPRESA",
+    "pista": "Un regalo que no sabías que ibas a recibir.",
+    "fecha": "2025-11-21"
+  },
+  {
+    "palabra": "MIEDO",
+    "pista": "La sombra que te hace mirar debajo de la cama. 👻",
+    "fecha": "2025-11-22"
+  },
+  {
+    "palabra": "NERVIOSO",
+    "pista": "Tener mariposas en el estómago, pero no de las buenas.",
+    "fecha": "2025-11-23"
+  },
+  {
+    "palabra": "TRANQUILO",
+    "pista": "Como un lago sin olas. 🏞️",
+    "fecha": "2025-11-24"
+  },
+  {
+    "palabra": "EMOCIONANTE",
+    "pista": "Lo que hace que tu corazón vaya más rápido.",
+    "fecha": "2025-11-25"
+  },
+  {
+    "palabra": "INOLVIDABLE",
+    "pista": "Lo que se graba en la memoria con tinta permanente.",
+    "fecha": "2025-11-26"
+  },
+  {
+    "palabra": "CANSADO",
+    "pista": "Cuando tu batería personal está al uno por ciento. 🔋",
+    "fecha": "2025-11-27"
+  },
+  {
+    "palabra": "AYER",
+    "pista": "El vecino del pasado más cercano.",
+    "fecha": "2025-11-28"
+  },
+  {
+    "palabra": "CONTAR",
+    "pista": "Dar vida a una historia con palabras o poner los números en orden.",
+    "fecha": "2025-11-29"
+  },
+  {
+    "palabra": "ESTÓMAGO",
+    "pista": "El primer destino de tu bocadillo.",
+    "fecha": "2025-11-30"
+  },
+  {
+    "palabra": "MODERNO",
+    "pista": "Lo que pertenece a nuestro tiempo, no al de los abuelos.",
+    "fecha": "2025-12-01"
+  },
+  {
+    "palabra": "DESAPARECER",
+    "pista": "Hacerse humo sin fuego. 💨",
+    "fecha": "2025-12-02"
+  },
+  {
+    "palabra": "RESPIRAR",
+    "pista": "El combustible invisible que nos mantiene en marcha.",
+    "fecha": "2025-12-03"
+  },
+  {
+    "palabra": "JUVENTUD",
+    "pista": "La primavera de la vida. 🌸",
+    "fecha": "2025-12-04"
+  },
+  {
+    "palabra": "VERGÜENZA",
+    "pista": "El calor que te sube a la cara cuando te equivocas en público. 😳",
+    "fecha": "2025-12-05"
+  }
+]
+
